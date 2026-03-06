@@ -1,0 +1,171 @@
+from __future__ import annotations
+
+import numpy as np
+
+from pydemetra._converters import jd2r_matrix
+from pydemetra._java import _ensure_jvm
+
+
+def periodic_bsplines(
+    order: int = 4,
+    period: float = 1.0,
+    knots: list[float] | np.ndarray = (),
+    pos: list[float] | np.ndarray = (),
+) -> np.ndarray:
+    """Compute periodic B-splines.
+
+    Args:
+        order: Order of the splines (4 for cubic).
+        period: Period of the splines.
+        knots: Knot positions in [0, period).
+        pos: Evaluation positions in [0, period).
+
+    Returns:
+        Matrix of shape (len(pos), len(knots)).
+    """
+    _ensure_jvm()
+    import jpype
+
+    BSplines = jpype.JClass("jdplus.toolkit.base.r.math.BSplines")
+    jm = BSplines.periodic(
+        int(order),
+        float(period),
+        np.asarray(knots, dtype=np.float64),
+        np.asarray(pos, dtype=np.float64),
+    )
+    return jd2r_matrix(jm)
+
+
+def bsplines(
+    order: int = 4,
+    knots: list[float] | np.ndarray = (),
+    pos: list[float] | np.ndarray = (),
+) -> np.ndarray:
+    """Compute B-splines.
+
+    Args:
+        order: Order of the splines (4 for cubic).
+        knots: Knot positions.
+        pos: Evaluation positions.
+
+    Returns:
+        Matrix of shape (len(pos), n_basis).
+    """
+    _ensure_jvm()
+    import jpype
+
+    BSplines = jpype.JClass("jdplus.toolkit.base.r.math.BSplines")
+    jm = BSplines.of(
+        int(order),
+        np.asarray(knots, dtype=np.float64),
+        np.asarray(pos, dtype=np.float64),
+    )
+    return jd2r_matrix(jm)
+
+
+def natural_cspline(
+    x: list[float] | np.ndarray,
+    y: list[float] | np.ndarray,
+    pos: list[float] | np.ndarray,
+) -> np.ndarray:
+    """Natural cubic spline interpolation.
+
+    Args:
+        x: Knot abscissas.
+        y: Knot ordinates.
+        pos: Evaluation positions.
+
+    Returns:
+        Array of spline values at the requested positions.
+    """
+    _ensure_jvm()
+    import jpype
+
+    CubicSplines = jpype.JClass("jdplus.toolkit.base.r.math.CubicSplines")
+    return np.array(
+        CubicSplines.natural(
+            np.asarray(x, dtype=np.float64),
+            np.asarray(y, dtype=np.float64),
+            np.asarray(pos, dtype=np.float64),
+        )
+    )
+
+
+def monotonic_cspline(
+    x: list[float] | np.ndarray,
+    y: list[float] | np.ndarray,
+    pos: list[float] | np.ndarray,
+) -> np.ndarray:
+    """Monotonic cubic spline interpolation.
+
+    Args:
+        x: Knot abscissas.
+        y: Knot ordinates.
+        pos: Evaluation positions.
+
+    Returns:
+        Array of spline values at the requested positions.
+    """
+    _ensure_jvm()
+    import jpype
+
+    CubicSplines = jpype.JClass("jdplus.toolkit.base.r.math.CubicSplines")
+    return np.array(
+        CubicSplines.monotonic(
+            np.asarray(x, dtype=np.float64),
+            np.asarray(y, dtype=np.float64),
+            np.asarray(pos, dtype=np.float64),
+        )
+    )
+
+
+def periodic_cspline(
+    x: list[float] | np.ndarray,
+    y: list[float] | np.ndarray,
+    pos: list[float] | np.ndarray,
+) -> np.ndarray:
+    """Periodic cubic spline interpolation.
+
+    Args:
+        x: Knot abscissas.
+        y: Knot ordinates.
+        pos: Evaluation positions.
+
+    Returns:
+        Array of spline values at the requested positions.
+    """
+    _ensure_jvm()
+    import jpype
+
+    CubicSplines = jpype.JClass("jdplus.toolkit.base.r.math.CubicSplines")
+    return np.array(
+        CubicSplines.periodic(
+            np.asarray(x, dtype=np.float64),
+            np.asarray(y, dtype=np.float64),
+            np.asarray(pos, dtype=np.float64),
+        )
+    )
+
+
+def periodic_csplines(
+    x: list[float] | np.ndarray,
+    pos: list[float] | np.ndarray,
+) -> np.ndarray:
+    """Periodic cardinal cubic splines.
+
+    Args:
+        x: Knot abscissas.
+        pos: Evaluation positions.
+
+    Returns:
+        Matrix of shape (len(pos), len(x)).
+    """
+    _ensure_jvm()
+    import jpype
+
+    CubicSplines = jpype.JClass("jdplus.toolkit.base.r.math.CubicSplines")
+    jm = CubicSplines.periodicCardinalSplines(
+        np.asarray(x, dtype=np.float64),
+        np.asarray(pos, dtype=np.float64),
+    )
+    return jd2r_matrix(jm)
