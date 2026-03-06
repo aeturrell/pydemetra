@@ -68,3 +68,5 @@ over output.
 - MUST put numbers into variables with meaningful names
 
 - USE British English
+
+- Use red/green tdd (test driven development)

@@ -127,6 +127,19 @@ from pydemetra.variables import (
     tc_variable,
     trigonometric_variables,
 )
+from pydemetra.x13 import (
+    regarima_spec as x13_regarima_spec,
+)
+from pydemetra.x13 import (
+    set_x11,
+    x11,
+    x11_spec,
+    x13,
+    x13_dictionary,
+    x13_fast,
+    x13_regarima,
+    x13_spec,
+)
 
 __all__ = [
     "aggregate",
@@ -240,4 +253,13 @@ __all__ = [
     "ucarima_wk",
     "user_defined",
     "weighted_calendar",
+    "x11",
+    "x11_spec",
+    "x13",
+    "x13_dictionary",
+    "x13_fast",
+    "x13_regarima",
+    "x13_regarima_spec",
+    "x13_spec",
+    "set_x11",
 ]

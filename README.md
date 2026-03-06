@@ -49,6 +49,73 @@ spec = jd.add_outlier(spec, type="AO", date="2020-03-01")
 spec = jd.set_benchmarking(spec, enabled=True, target="Original")
 ```
 
+### X-13ARIMA-SEATS seasonal adjustment
+
+```python
+import pandas as pd
+import numpy as np
+import pydemetra as jd
+
+# Create a sample monthly time series
+index = pd.period_range("2000-01", periods=240, freq="M")
+ts = pd.Series(
+    np.cumsum(np.random.default_rng(42).normal(size=240)) + 100,
+    index=index,
+)
+
+# Create a default X-13 specification and run seasonal adjustment
+spec = jd.x13_spec("rsa5c")
+result = jd.x13(ts, spec)
+
+# Extract key components
+sa = result["result"]["final"]["d11final"]       # seasonally adjusted series
+trend = result["result"]["final"]["d12final"]     # trend
+seasonal = result["result"]["final"]["d16"]       # seasonal component
+irregular = result["result"]["final"]["d13final"] # irregular component
+
+# Quality diagnostics (M-statistics; Q < 1 is acceptable)
+print(result["result"]["mstats"]["q"])
+
+# Use a string shorthand instead of a spec object
+result = jd.x13(ts, "rsa5")
+result["result"]["final"]["d11"]
+
+# Modify the X-11 decomposition parameters
+spec = jd.set_x11(spec, henderson_filter=13, seasonal_filter="S3X5")
+result = jd.x13(ts, spec)
+
+# Pure X-11 decomposition (no RegARIMA pre-processing)
+x11_result = jd.x11(ts)
+print(x11_result["d11"])  # seasonally adjusted (D11)
+
+# RegARIMA modelling only
+regarima_result = jd.x13_regarima(ts, "rg5c")
+print(regarima_result["result"]["estimation"]["likelihood"])
+```
+
+### Customising specifications
+
+```python
+import pydemetra as jd
+
+# Start from RSA5 and customise
+spec = jd.x13_spec("rsa5c")
+
+# Force log transformation (no automatic detection)
+spec["regarima"]["transform"]["fn"] = "LOG"
+
+# Disable transitory component (TC) outlier detection
+spec["regarima"]["outlier"]["outliers"] = [
+    o for o in spec["regarima"]["outlier"]["outliers"] if o["type"] != "TC"
+]
+
+# Disable trading day regressors (suitable for quarterly data)
+spec["regarima"]["regression"]["td"]["td"] = "TD_NONE"
+spec["regarima"]["regression"]["td"]["auto"] = "AUTO_NO"
+
+result = jd.x13(ts, spec)
+```
+
 Most functions that interact with JDemetra+ Java classes require a running JVM. The JVM is started lazily on the first call — no manual setup needed as long as Java 17+ is on your `PATH` or `JAVA_HOME` is set.
 
 ## Development

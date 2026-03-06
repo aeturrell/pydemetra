@@ -5,12 +5,15 @@ df = pd.read_parquet("/Users/arthur.turrell/Downloads/point_estimates_q_on_q.par
 
 df.index = df.index + pd.tseries.offsets.MonthBegin() - pd.DateOffset(months=1)
 
-df.index = df.index.strftime("%d-%m-%Y")
+df.index = df.index.to_period()
+result = jd.x13(df["London"], "rsa4")
+
 
 
 
 # df.to_excel("~/Desktop/sa_test.xlsx")
 # df.to_csv("~/Desktop/sa_test.csv")
+
 
 
 
