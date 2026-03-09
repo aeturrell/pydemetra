@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import numpy as np
-
 from pydemetra._models import Likelihood
 from pydemetra.regarima import (
     regarima_coef,

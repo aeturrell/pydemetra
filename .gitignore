@@ -1,6 +1,30 @@
+# Package related files
+/build/
+.mypy_cache/
+/.coverage
+/.coverage.*
+/.nox/
+/.python-version
+/.pytype/
+/dist/
+/docs/_build/
+/src/*.egg-info/
+__pycache__/
+settings.json
+.DS_store
+/docs/.quarto/
+/.quarto/
+.venv/
+/docs_old/
+docs/reference/*
+docs/_sidebar.yml
+/.luarc.json
+docs/_site/
 jdemetra/**
 rpackages/**
 .DS_Store
+logs/
+!logs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -186,9 +210,9 @@ cython_debug/
 .abstra/
 
 # Visual Studio Code
-#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore 
+#  Visual Studio Code specific template is maintained in a separate VisualStudioCode.gitignore
 #  that can be found at https://github.com/github/gitignore/blob/main/Global/VisualStudioCode.gitignore
-#  and can be added to the global gitignore or merged into this file. However, if you prefer, 
+#  and can be added to the global gitignore or merged into this file. However, if you prefer,
 #  you could uncomment the following to ignore the entire vscode folder
 # .vscode/
 
