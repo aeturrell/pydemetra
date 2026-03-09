@@ -7,11 +7,12 @@ website:
   twitter-card: true
   navbar:
     left:
-      - href: index.ipynb
+      - href: index.qmd
         text: Home
       - text: "Reference"
         file: reference/index.qmd
-      - contributing.qmd
+      - text: "Quick Start"
+        file: quick_start.ipynb
 
 format:
   html:
@@ -33,10 +34,159 @@ quartodoc:
   sidebar: _sidebar.yml
 
   sections:
-    - title: "Reference"
-      desc: "What pydemetra's functions do"
+    - title: "(S)ARIMA models"
+      desc: "Functions to wrangle (S)arima models"
       contents:
-        # the functions being documented in the package.
-        # you can refer to anything: class methods, modules, etc..
-        - foo
-        - class_foo
+        - arima_difference
+        - arima_model
+        - arima_properties
+        - arima_sum
+        - sarima_decompose
+        - sarima_estimate
+        - sarima_hannan_rissanen
+        - sarima_model
+        - sarima_properties
+        - sarima_random
+        - ucarima_canonical
+        - ucarima_estimate
+        - ucarima_model
+        - ucarima_wk
+    - title: "Calendars & holidays"
+      desc: "Calendar definitions, holidays, and trading-day variables"
+      contents:
+        - calendar_td
+        - chained_calendar
+        - easter_dates
+        - easter_day
+        - fixed_day
+        - fixed_week_day
+        - holidays
+        - long_term_mean
+        - national_calendar
+        - single_day
+        - special_day
+        - stock_td
+        - td
+        - weighted_calendar
+    - title: "Regression variables"
+      desc: "Pre-defined and user-defined regression variables for seasonal adjustment"
+      contents:
+        - ao_variable
+        - easter_variable
+        - intervention_variable
+        - julianeaster_variable
+        - lp_variable
+        - ls_variable
+        - periodic_contrasts
+        - periodic_dummies
+        - ramp_variable
+        - so_variable
+        - tc_variable
+        - trigonometric_variables
+    - title: "X-13ARIMA-SEATS"
+      desc: "Run X-13ARIMA-SEATS seasonal adjustment and retrieve specifications"
+      contents:
+        - x11
+        - x11_spec
+        - x13
+        - x13_dictionary
+        - x13_fast
+        - x13_regarima
+        - x13_regarima_spec
+        - x13_spec
+        - set_x11
+    - title: "RegARIMA results"
+      desc: "Inspect estimation results from RegARIMA models"
+      contents:
+        - regarima_coef
+        - regarima_loglik
+        - regarima_residuals
+        - regarima_summary
+        - regarima_vcov
+    - title: "Specification helpers"
+      desc: "Modify model specifications (outliers, ramps, benchmarking)"
+      contents:
+        - add_outlier
+        - add_ramp
+        - remove_outlier
+        - remove_ramp
+        - set_benchmarking
+    - title: "Distributions"
+      desc: "PDFs, CDFs, and random draws for common distributions"
+      contents:
+        - cdf_chi2
+        - cdf_gamma
+        - cdf_inverse_gamma
+        - cdf_inverse_gaussian
+        - cdf_t
+        - density_chi2
+        - density_gamma
+        - density_inverse_gamma
+        - density_inverse_gaussian
+        - density_t
+        - random_chi2
+        - random_gamma
+        - random_inverse_gamma
+        - random_inverse_gaussian
+        - random_t
+    - title: "Statistical tests"
+      desc: "Autocorrelations, normality tests, seasonality tests, and more"
+      contents:
+        - autocorrelations
+        - autocorrelations_inverse
+        - autocorrelations_partial
+        - bowman_shenton
+        - doornik_hansen
+        - jarque_bera
+        - kurtosis
+        - ljungbox
+        - mad
+        - seasonality_canova_hansen
+        - seasonality_canova_hansen_trigs
+        - seasonality_combined
+        - seasonality_f
+        - seasonality_friedman
+        - seasonality_kruskal_wallis
+        - seasonality_modified_qs
+        - seasonality_periodogram
+        - seasonality_qs
+        - skewness
+        - td_canova_hansen
+        - td_f
+        - td_time_varying
+        - test_of_runs
+        - test_of_up_down_runs
+    - title: "Differencing"
+      desc: "Differencing operators and stationarity helpers"
+      contents:
+        - differences
+        - differencing_fast
+        - do_stationary
+        - rangemean_tstat
+    - title: "Time series utilities"
+      desc: "Aggregation, interpolation, and other time-series helpers"
+      contents:
+        - aggregate
+        - clean_extremities
+        - compare_annual_totals
+        - days_of
+        - ts_adjust
+        - ts_interpolate
+        - tsdata_of
+    - title: "Splines"
+      desc: "B-splines, cubic splines, and periodic variants"
+      contents:
+        - bsplines
+        - monotonic_cspline
+        - natural_cspline
+        - periodic_bsplines
+        - periodic_cspline
+        - periodic_csplines
+    - title: "Decomposition & context"
+      desc: "Dictionaries, modelling contexts, and SA decomposition"
+      contents:
+        - dictionary
+        - modelling_context
+        - result
+        - sa_decomposition
+        - user_defined

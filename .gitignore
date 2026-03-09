@@ -1,6 +1,30 @@
+# Package related files
+/build/
+.mypy_cache/
+/.coverage
+/.coverage.*
+/.nox/
+/.python-version
+/.pytype/
+/dist/
+/docs/_build/
+/src/*.egg-info/
+__pycache__/
+settings.json
+.DS_store
+/docs/.quarto/
+/.quarto/
+.venv/
+/docs_old/
+docs/reference/*
+docs/_sidebar.yml
+/.luarc.json
+docs/_site/
 jdemetra/**
 rpackages/**
 .DS_Store
+logs/
+!logs/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

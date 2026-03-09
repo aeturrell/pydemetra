@@ -1,8 +1,13 @@
-# This makes the documentation for pydemetra
-# In practice, though, done in the GitHub Action (release)
-.PHONY: all site publish
+# This makes the documentation and readme for pydemetra
 
-all: site
+.PHONY: all clean site publish
+
+all: README.md site
+
+# Build the readme
+README.md: docs/index.qmd
+		cp docs/index.qmd README.md
+
 
 # Build the github pages site
 site:
@@ -12,6 +17,10 @@ site:
 		rm docs/.gitignore
 		uv run nbstripout docs/*.ipynb
 		uv run pre-commit run --all-files
+
+
+clean:
+	rm README.md
 
 
 publish:

@@ -127,10 +127,15 @@ def start_jvm(java_home: str | None = None, max_heap: str = "512m") -> None:
     classpath = os.pathsep.join(str(j) for j in jars)
     jvm_path = _find_jvm_path(java_home)
 
+    logs_dir = Path("logs")
+    logs_dir.mkdir(exist_ok=True)
+    logging_config = Path(__file__).parent / "_java_logging.properties"
+
     logger.debug("Starting JVM with {} JARs, max_heap={}", len(jars), max_heap)
     jpype.startJVM(
         jvm_path,
         f"-Xmx{max_heap}",
+        f"-Djava.util.logging.config.file={logging_config}",
         "--enable-native-access=ALL-UNNAMED",
         classpath=[classpath],
         convertStrings=True,
