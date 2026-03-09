@@ -88,7 +88,9 @@ def _find_jvm_path(java_home: str | None = None) -> str:
         try:
             result = subprocess.run(
                 [str(java_real), "-XshowSettings:properties", "-version"],
-                capture_output=True, text=True, timeout=10,
+                capture_output=True,
+                text=True,
+                timeout=10,
             )
             for line in (result.stdout + result.stderr).splitlines():
                 if "java.home" in line:

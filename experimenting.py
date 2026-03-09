@@ -6,31 +6,26 @@ df = pd.read_parquet("/Users/arthur.turrell/Downloads/point_estimates_q_on_q.par
 df.index = df.index + pd.tseries.offsets.MonthBegin() - pd.DateOffset(months=1)
 
 df.index = df.index.to_period()
-result = jd.x13(df["London"], "rsa4")
+df["London"] = df["London"].abs()
+
+spec = jd.x13_spec("rsa5c")
+# Force log transformation (no automatic detection)
+spec["regarima"]["transform"]["fn"] = "LOG"
+
+# Disable transitory component (TC) outlier detection
+spec["regarima"]["outlier"]["outliers"] = [
+    o for o in spec["regarima"]["outlier"]["outliers"] if o["type"] != "TC"
+]
+
+# Disable trading day regressors (suitable for quarterly data)
+spec["regarima"]["regression"]["td"]["td"] = "TD_NONE"
+spec["regarima"]["regression"]["td"]["auto"] = "AUTO_NO"
+
+result = jd.x13(df["London"], spec)
+
+sa = result["result"]["final"]["d11final"]  # seasonally adjusted series
+trend = result["result"]["final"]["d12final"]  # trend
 
 
-
-
-# df.to_excel("~/Desktop/sa_test.xlsx")
-# df.to_csv("~/Desktop/sa_test.csv")
-
-
-
-
-# Create a SARIMA model specification
-model = jd.sarima_model(period=12, phi=[0.8], d=1, theta=[-0.6], bd=1, btheta=[-0.5])
-print(model)
-# SARIMA(1,1,1)(0,1,1)[12]
-
-# Build a calendar with holidays
-cal = jd.national_calendar(days=[
-    jd.fixed_day(month=1, day=1),       # New Year
-    jd.fixed_day(month=12, day=25),      # Christmas
-    jd.easter_day(offset=-2),            # Good Friday
-])
-
-# Generate trading day regressors
-td_regs = jd.td(frequency=12, start=2000, length=120)
-
-# Run seasonality tests (requires JVM)
-result = jd.seasonality_qs(df["London"], period=12)
+results_vanilla = jd.x13(df["London"], "rsa5c")
+results_vanilla["result"]["final"]["d12final"]

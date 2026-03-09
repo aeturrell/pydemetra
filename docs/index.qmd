@@ -1,0 +1,4 @@
+# pydemetra
+
+Python front-end to [JDemetra+](https://github.com/jdemetra).
+

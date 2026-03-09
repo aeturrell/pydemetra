@@ -123,7 +123,7 @@ Most functions that interact with JDemetra+ Java classes require a running JVM. 
 ```bash
 uv sync --group dev
 uv run pytest tests/ -v
-uv run ruff check pydemetra/ tests/
+uv run ruff check src/pydemetra/ tests/
 ```
 
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import copy
 
 import pytest
-
+from pydemetra._proto import x13_pb2
 from pydemetra.x13 import (
     _p2r_spec_regarima,
     _p2r_spec_x11,
@@ -16,7 +16,6 @@ from pydemetra.x13 import (
     _r2p_spec_x13,
     set_x11,
 )
-from pydemetra._proto import x13_pb2
 
 
 class TestSetX11:
@@ -258,24 +257,57 @@ class TestX13SpecRoundTrip:
             "outlier": {
                 "outliers": [],
                 "span": Span(type="ALL", d0=None, d1=None, n0=0, n1=0),
-                "defva": 0.0, "method": "ADDONE", "monthlytcrate": 0.7,
-                "maxiter": 0, "lsrun": 0,
+                "defva": 0.0,
+                "method": "ADDONE",
+                "monthlytcrate": 0.7,
+                "maxiter": 0,
+                "lsrun": 0,
             },
-            "arima": {"period": 0, "d": 0, "bd": 0, "phi": [], "theta": [], "bphi": [], "btheta": []},
+            "arima": {
+                "period": 0,
+                "d": 0,
+                "bd": 0,
+                "phi": [],
+                "theta": [],
+                "bphi": [],
+                "btheta": [],
+            },
             "automodel": {
-                "enabled": True, "ljungbox": 0.95, "tsig": 1.0, "predcv": 0.14286,
-                "ubfinal": 1.05, "ub1": 0.97, "ub2": 0.91, "cancel": 0.1,
-                "fct": 0.0, "acceptdef": False, "mixed": True, "balanced": False,
+                "enabled": True,
+                "ljungbox": 0.95,
+                "tsig": 1.0,
+                "predcv": 0.14286,
+                "ubfinal": 1.05,
+                "ub1": 0.97,
+                "ub2": 0.91,
+                "cancel": 0.1,
+                "fct": 0.0,
+                "acceptdef": False,
+                "mixed": True,
+                "balanced": False,
             },
             "regression": {
-                "mean": None, "check_mean": True,
+                "mean": None,
+                "check_mean": True,
                 "td": {
-                    "td": "TD_NONE", "lp": "NONE", "holidays": "", "users": [], "w": 0,
-                    "test": "NO", "auto": "AUTO_NO", "autoadjust": True,
-                    "tdcoefficients": [], "lpcoefficient": None, "ptest1": 0.01, "ptest2": 0.01,
+                    "td": "TD_NONE",
+                    "lp": "NONE",
+                    "holidays": "",
+                    "users": [],
+                    "w": 0,
+                    "test": "NO",
+                    "auto": "AUTO_NO",
+                    "autoadjust": True,
+                    "tdcoefficients": [],
+                    "lpcoefficient": None,
+                    "ptest1": 0.01,
+                    "ptest2": 0.01,
                 },
                 "easter": {"type": "UNUSED", "duration": 0, "test": "NO", "coefficient": None},
-                "outliers": None, "users": None, "interventions": None, "ramps": None,
+                "outliers": None,
+                "users": None,
+                "interventions": None,
+                "ramps": None,
             },
             "estimate": {
                 "span": Span(type="ALL", d0=None, d1=None, n0=0, n1=0),
@@ -283,8 +315,12 @@ class TestX13SpecRoundTrip:
             },
         }
         benchmarking = {
-            "enabled": False, "target": "BENCH_TARGET_UNSPECIFIED", "lambda": 1.0,
-            "rho": 1.0, "bias": "BENCH_BIAS_NONE", "forecast": False,
+            "enabled": False,
+            "target": "BENCH_TARGET_UNSPECIFIED",
+            "lambda": 1.0,
+            "rho": 1.0,
+            "bias": "BENCH_BIAS_NONE",
+            "forecast": False,
         }
 
         spec = {"regarima": minimal_regarima, "x11": minimal_x11, "benchmarking": benchmarking}
@@ -292,8 +328,18 @@ class TestX13SpecRoundTrip:
         result = _p2r_spec_x13(p)
         assert set(result.keys()) == {"regarima", "x11", "benchmarking"}
         assert set(result["x11"].keys()) == {
-            "mode", "seasonal", "henderson", "sfilters", "lsig", "usig",
-            "nfcasts", "nbcasts", "sigma", "vsigmas", "excludefcasts", "bias",
+            "mode",
+            "seasonal",
+            "henderson",
+            "sfilters",
+            "lsig",
+            "usig",
+            "nfcasts",
+            "nbcasts",
+            "sigma",
+            "vsigmas",
+            "excludefcasts",
+            "bias",
         }
 
 
@@ -301,15 +347,42 @@ class TestResultExtraction:
     def test_x11_rslts_keys(self):
         p = x13_pb2.X11Results()
         result = _p2r_x11_rslts(p)
-        expected = {"d1", "d2", "d4", "d5", "d6", "d7", "d8", "d9",
-                    "d10", "d11", "d12", "d13", "final_seasonal", "final_henderson"}
+        expected = {
+            "d1",
+            "d2",
+            "d4",
+            "d5",
+            "d6",
+            "d7",
+            "d8",
+            "d9",
+            "d10",
+            "d11",
+            "d12",
+            "d13",
+            "final_seasonal",
+            "final_henderson",
+        }
         assert set(result.keys()) == expected
 
     def test_x13_final_keys(self):
         p = x13_pb2.X13Finals()
         result = _p2r_x13_final(p)
-        expected = {"d11final", "d12final", "d13final", "d16", "d18",
-                    "d11a", "d12a", "d16a", "d18a", "e1", "e2", "e3", "e11"}
+        expected = {
+            "d11final",
+            "d12final",
+            "d13final",
+            "d16",
+            "d18",
+            "d11a",
+            "d12a",
+            "d16a",
+            "d18a",
+            "e1",
+            "e2",
+            "e3",
+            "e11",
+        }
         assert set(result.keys()) == expected
 
     def test_x13_preadjust_keys(self):
