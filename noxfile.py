@@ -6,7 +6,7 @@ from textwrap import dedent
 import nox
 
 package = "pydemetra"
-python_versions = ["3.10", "3.11", "3.12", "3.13"]
+python_versions = ["3.11", "3.12", "3.13"]
 nox.needs_version = ">= 2021.6.6"
 nox.options.default_venv_backend = "uv"
 nox.options.sessions = (
