@@ -16,7 +16,7 @@ from pydemetra._models import (
     UcarimaModel,
 )
 from pydemetra._proto import modelling_pb2, sa_pb2, toolkit_pb2
-from pydemetra._protobuf import enum_extract, enum_of
+from pydemetra._protobuf import enum_extract, enum_of, enum_sextract, enum_sof
 
 # ---------------------------------------------------------------------------
 # JPype direct converters (Java <-> Python)
@@ -379,22 +379,30 @@ def p2r_spec_benchmarking(p: sa_pb2.BenchmarkingSpec) -> dict:
     """Convert a protobuf BenchmarkingSpec to a Python dict."""
     return {
         "enabled": p.enabled,
-        "target": enum_extract(sa_pb2.BenchmarkingTarget, p.target),
+        "target": enum_sextract(sa_pb2.BenchmarkingTarget, p.target),
         "lambda": getattr(p, "lambda"),
         "rho": p.rho,
-        "bias": enum_extract(sa_pb2.BenchmarkingBias, p.bias),
+        "bias": enum_sextract(sa_pb2.BenchmarkingBias, p.bias),
         "forecast": p.forecast,
     }
+
+
+def _bench_enum(enum_type, value: str, prefix: str) -> int:
+    """Resolve a benchmarking enum value, accepting both full and short names."""
+    try:
+        return enum_sof(enum_type, value)
+    except ValueError:
+        return enum_of(enum_type, value.upper(), prefix)
 
 
 def r2p_spec_benchmarking(r: dict) -> sa_pb2.BenchmarkingSpec:
     """Convert a Python dict to a protobuf BenchmarkingSpec."""
     p = sa_pb2.BenchmarkingSpec()
     p.enabled = r["enabled"]
-    p.target = enum_of(sa_pb2.BenchmarkingTarget, r["target"], "BENCH_TARGET")
+    p.target = _bench_enum(sa_pb2.BenchmarkingTarget, r["target"], "BENCH_TARGET")
     setattr(p, "lambda", r["lambda"])
     p.rho = r["rho"]
-    p.bias = enum_of(sa_pb2.BenchmarkingBias, r["bias"], "BENCH_BIAS")
+    p.bias = _bench_enum(sa_pb2.BenchmarkingBias, r["bias"], "BENCH_BIAS")
     p.forecast = r["forecast"]
     return p
 

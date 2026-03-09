@@ -283,8 +283,8 @@ class TestX13SpecRoundTrip:
             },
         }
         benchmarking = {
-            "enabled": False, "target": "UNSPECIFIED", "lambda": 1.0,
-            "rho": 1.0, "bias": "NONE", "forecast": False,
+            "enabled": False, "target": "BENCH_TARGET_UNSPECIFIED", "lambda": 1.0,
+            "rho": 1.0, "bias": "BENCH_BIAS_NONE", "forecast": False,
         }
 
         spec = {"regarima": minimal_regarima, "x11": minimal_x11, "benchmarking": benchmarking}
