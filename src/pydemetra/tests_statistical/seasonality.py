@@ -46,13 +46,13 @@ def seasonality_qs(
     """QS (seasonal Ljung-Box) test.
 
     Args:
-        data: Input data.
-        period: Tested periodicity.
-        nyears: Number of years at end of series (0=full sample).
-        type: 1 for positive, -1 for negative, 0 for all auto-correlations.
+        data (np.ndarray | pd.Series): Input data.
+        period (int | None): Tested periodicity.
+        nyears (int): Number of years at end of series (0=full sample).
+        type (int): 1 for positive, -1 for negative, 0 for all auto-correlations.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     period = _get_period(data, period)
@@ -69,12 +69,12 @@ def seasonality_modified_qs(
     """Modified QS seasonality test (Maravall).
 
     Args:
-        data: Input data.
-        period: Tested periodicity.
-        nyears: Number of years at end of series.
+        data (np.ndarray | pd.Series): Input data.
+        period (int | None): Tested periodicity.
+        nyears (int): Number of years at end of series.
 
     Returns:
-        The test statistic value.
+        float: The test statistic value.
     """
     _ensure_jvm()
     period = _get_period(data, period)
@@ -130,13 +130,13 @@ def seasonality_f(
     """F-test on seasonal dummies.
 
     Args:
-        data: Input data.
-        period: Tested periodicity.
-        model: ``"AR"``, ``"D1"``, or ``"WN"``.
-        nyears: Number of years at end of series.
+        data (np.ndarray | pd.Series): Input data.
+        period (int | None): Tested periodicity.
+        model (str): ``"AR"``, ``"D1"``, or ``"WN"``.
+        nyears (int): Number of years at end of series.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     period = _get_period(data, period)
@@ -154,13 +154,13 @@ def seasonality_combined(
     """Combined seasonality test (X12-style).
 
     Args:
-        data: Input data.
-        period: Tested periodicity.
-        firstperiod: Position of the first observation in a cycle.
-        mul: Multiplicative decomposition.
+        data (np.ndarray | pd.Series): Input data.
+        period (int | None): Tested periodicity.
+        firstperiod (int): Position of the first observation in a cycle.
+        mul (bool): Multiplicative decomposition.
 
     Returns:
-        Dict with ``"seasonality"``, ``"kruskalwallis"``, ``"stable"``, ``"evolutive"`` keys.
+        dict: Dict with ``"seasonality"``, ``"kruskalwallis"``, ``"stable"``, ``"evolutive"`` keys.
     """
     _ensure_jvm()
 
@@ -214,15 +214,15 @@ def seasonality_canova_hansen_trigs(
     """Canova-Hansen test using trigonometric variables.
 
     Args:
-        data: Input data.
-        periods: Periodicities to test.
-        lag1: Include lagged variable.
-        kernel: Kernel for Newey-West covariance.
-        order: Truncation parameter (-1 for automatic).
-        original: Use original algorithm.
+        data (np.ndarray | pd.Series): Input data.
+        periods (np.ndarray | list[float]): Periodicities to test.
+        lag1 (bool): Include lagged variable.
+        kernel (str): Kernel for Newey-West covariance.
+        order (int): Truncation parameter (-1 for automatic).
+        original (bool): Use original algorithm.
 
     Returns:
-        Array of test statistics.
+        np.ndarray: Array of test statistics.
     """
     _ensure_jvm()
     vals = _to_1d(data)
@@ -250,16 +250,16 @@ def seasonality_canova_hansen(
     """Canova-Hansen seasonality test.
 
     Args:
-        data: Input data.
-        period: Periodicity.
-        type: ``"Contrast"``, ``"Dummy"``, or ``"Trigonometric"``.
-        lag1: Include lagged variable.
-        kernel: Kernel for Newey-West covariance.
-        order: Truncation parameter (-1 for automatic).
-        start: Position of first observation.
+        data (np.ndarray | pd.Series): Input data.
+        period (int): Periodicity.
+        type (str): ``"Contrast"``, ``"Dummy"``, or ``"Trigonometric"``.
+        lag1 (bool): Include lagged variable.
+        kernel (str): Kernel for Newey-West covariance.
+        order (int): Truncation parameter (-1 for automatic).
+        start (int): Position of first observation.
 
     Returns:
-        Dict with ``"seasonality"``, ``"joint"``, and ``"details"`` keys.
+        dict: Dict with ``"seasonality"``, ``"joint"``, and ``"details"`` keys.
     """
     _ensure_jvm()
     vals = _to_1d(data)

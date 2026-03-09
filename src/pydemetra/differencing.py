@@ -10,12 +10,12 @@ def do_stationary(data: np.ndarray | pd.Series, period: int | None = None) -> di
     """Automatic stationary transformation using Tramo-style differencing.
 
     Args:
-        data: Series to be differenced.
-        period: Period of the series.
+        data (np.ndarray | pd.Series): Series to be differenced.
+        period (int | None): Period of the series.
 
     Returns:
-        Dict with ``"ddata"`` (differenced data), ``"mean"`` (mean correction flag),
-        and ``"differences"`` (lag/order matrix).
+        dict: Dict with ``"ddata"`` (differenced data), ``"mean"`` (mean correction flag),
+            and ``"differences"`` (lag/order matrix).
     """
     _ensure_jvm()
     import jpype
@@ -57,14 +57,14 @@ def differencing_fast(
     """Fast automatic differencing based on variance decrease.
 
     Args:
-        data: Series to be differenced.
-        period: Period of the series.
-        mad: Use MAD for variance computation.
-        centile: Percentage of data used for variance.
-        k: Tolerance for variance decrease.
+        data (np.ndarray | pd.Series): Series to be differenced.
+        period (int | None): Period of the series.
+        mad (bool): Use MAD for variance computation.
+        centile (float): Percentage of data used for variance.
+        k (float): Tolerance for variance decrease.
 
     Returns:
-        Dict with ``"ddata"``, ``"mean"``, and ``"differences"`` keys.
+        dict: Dict with ``"ddata"``, ``"mean"``, and ``"differences"`` keys.
     """
     _ensure_jvm()
     import jpype
@@ -103,12 +103,12 @@ def differences(
     """Difference a series at specified lags.
 
     Args:
-        data: Series to be differenced.
-        lags: Single lag or list of lags.
-        mean: Apply mean correction after differencing.
+        data (np.ndarray | pd.Series): Series to be differenced.
+        lags (list[int] | int): Single lag or list of lags.
+        mean (bool): Apply mean correction after differencing.
 
     Returns:
-        The differenced series.
+        np.ndarray: The differenced series.
     """
     _ensure_jvm()
     import jpype
@@ -137,13 +137,13 @@ def rangemean_tstat(
     """Range-mean regression T-statistic for log transformation decision.
 
     Args:
-        data: Data to test.
-        period: Periodicity.
-        groupsize: Number of observations per group (0=automatic).
-        trim: Number of trimmed observations.
+        data (np.ndarray | pd.Series): Data to test.
+        period (int): Periodicity.
+        groupsize (int): Number of observations per group (0=automatic).
+        trim (int): Number of trimmed observations.
 
     Returns:
-        T-statistic of the slope.
+        float: T-statistic of the slope.
     """
     _ensure_jvm()
     import jpype

@@ -14,15 +14,15 @@ def sa_decomposition(
     """Create a seasonal adjustment decomposition result.
 
     Args:
-        y: Original series component.
-        sa: Seasonally adjusted component.
-        t: Trend component.
-        s: Seasonal component.
-        i: Irregular component.
-        mul: True for multiplicative decomposition.
+        y (object): Original series component.
+        sa (object): Seasonally adjusted component.
+        t (object): Trend component.
+        s (object): Seasonal component.
+        i (object): Irregular component.
+        mul (bool): True for multiplicative decomposition.
 
     Returns:
-        SaDecomposition dataclass.
+        SaDecomposition: SaDecomposition dataclass.
     """
     mode = "MULTIPLICATIVE" if mul else "ADDITIVE"
     return SaDecomposition(

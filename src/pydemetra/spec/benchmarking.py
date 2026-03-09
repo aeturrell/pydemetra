@@ -15,16 +15,16 @@ def set_benchmarking(
     """Configure benchmarking in a specification.
 
     Args:
-        spec: The specification dict.
-        enabled: Enable benchmarking.
-        target: ``"CalendarAdjusted"`` or ``"Original"``.
-        rho: Rho parameter.
-        lambda_: Lambda parameter.
-        forecast: Include forecast.
-        bias: ``"None"``, ``"Additive"``, or ``"Multiplicative"``.
+        spec (dict): The specification dict.
+        enabled (bool | None): Enable benchmarking.
+        target (str | None): ``"CalendarAdjusted"`` or ``"Original"``.
+        rho (float | None): Rho parameter.
+        lambda_ (float | None): Lambda parameter.
+        forecast (bool | None): Include forecast.
+        bias (str | None): ``"None"``, ``"Additive"``, or ``"Multiplicative"``.
 
     Returns:
-        Modified specification dict.
+        dict: Modified specification dict.
     """
     spec = copy.deepcopy(spec)
     bench = spec.setdefault("benchmarking", {})

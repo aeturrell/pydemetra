@@ -1,6 +1,5 @@
 """Nox sessions."""
 
-import sys
 from pathlib import Path
 from textwrap import dedent
 
@@ -27,7 +26,7 @@ def activate_virtualenv_in_precommit_hooks(session: nox.Session) -> None:
     that environment when invoked from git.
 
     Args:
-        session: The Session object.
+        session (nox.Session): The Session object.
     """
     if session.bin is None:
         return
@@ -46,9 +45,7 @@ def activate_virtualenv_in_precommit_hooks(session: nox.Session) -> None:
 
         text = hook.read_text()
         bindir = repr(session.bin)[1:-1]  # strip quotes
-        if not (
-            Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text
-        ):
+        if not (Path("A") == Path("a") and bindir.lower() in text.lower() or bindir in text):
             continue
 
         lines = text.splitlines()

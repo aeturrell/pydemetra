@@ -17,12 +17,13 @@ def td_f(
     """Residual trading days F-test.
 
     Args:
-        s: Input time series.
-        model: ``"D1"``, ``"DY"``, ``"DYD1"``, ``"WN"``, ``"AIRLINE"``, ``"R011"``, ``"R100"``.
-        nyears: Number of years at end of series (0=full sample).
+        s (pd.Series): Input time series.
+        model (str): ``"D1"``, ``"DY"``, ``"DYD1"``, ``"WN"``, ``"AIRLINE"``,
+            ``"R011"``, ``"R100"``.
+        nyears (int): Number of years at end of series (0=full sample).
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     import jpype
@@ -42,13 +43,13 @@ def td_canova_hansen(
     """Canova-Hansen test for stable trading days.
 
     Args:
-        s: Input time series.
-        differencing: Differencing lags.
-        kernel: Kernel for Newey-West covariance.
-        order: Truncation parameter (-1 for automatic).
+        s (pd.Series): Input time series.
+        differencing (list[int]): Differencing lags.
+        kernel (str): Kernel for Newey-West covariance.
+        order (int): Truncation parameter (-1 for automatic).
 
     Returns:
-        Dict with ``"td"``, ``"joint"``, and ``"details"`` keys.
+        dict: Dict with ``"td"``, ``"joint"``, and ``"details"`` keys.
     """
     _ensure_jvm()
     import jpype
@@ -79,12 +80,12 @@ def td_time_varying(
     """Likelihood ratio test on time-varying trading days.
 
     Args:
-        s: Input time series.
-        groups: Day-of-week grouping (length 7).
-        contrasts: Use contrasts for covariance matrix.
+        s (pd.Series): Input time series.
+        groups (list[int] | None): Day-of-week grouping (length 7).
+        contrasts (bool): Use contrasts for covariance matrix.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     import jpype

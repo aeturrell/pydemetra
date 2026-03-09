@@ -154,15 +154,15 @@ def td(
     """Generate trading day regressors without holidays.
 
     Args:
-        frequency: Annual frequency (12, 4, etc.).
-        start: (year, period) tuple.
-        length: Number of periods.
-        s: Optional time series to derive parameters from.
-        groups: Day-of-week grouping (length 7, Mon=index 0).
-        contrasts: Whether to return contrasts against the 0-group.
+        frequency (int): Annual frequency (12, 4, etc.).
+        start (tuple[int, int]): (year, period) tuple.
+        length (int): Number of periods.
+        s (pd.Series | None): Optional time series to derive parameters from.
+        groups (list[int] | None): Day-of-week grouping (length 7, Mon=index 0).
+        contrasts (bool): Whether to return contrasts against the 0-group.
 
     Returns:
-        DataFrame with trading day regressor columns.
+        pd.DataFrame: DataFrame with trading day regressor columns.
     """
     _ensure_jvm()
     import jpype
@@ -197,17 +197,17 @@ def calendar_td(
     """Generate trading day regressors with pre-defined holidays.
 
     Args:
-        calendar: The calendar containing holidays.
-        frequency: Annual frequency.
-        start: (year, period) tuple.
-        length: Number of periods.
-        s: Optional time series to derive parameters from.
-        groups: Day-of-week grouping.
-        holiday: Day to aggregate holidays with (7=Sunday).
-        contrasts: Whether to return contrasts.
+        calendar (NationalCalendar): The calendar containing holidays.
+        frequency (int): Annual frequency.
+        start (tuple[int, int]): (year, period) tuple.
+        length (int): Number of periods.
+        s (pd.Series | None): Optional time series to derive parameters from.
+        groups (list[int] | None): Day-of-week grouping.
+        holiday (int): Day to aggregate holidays with (7=Sunday).
+        contrasts (bool): Whether to return contrasts.
 
     Returns:
-        DataFrame with trading day regressor columns.
+        pd.DataFrame: DataFrame with trading day regressor columns.
     """
     _ensure_jvm()
     import jpype
@@ -242,15 +242,15 @@ def holidays(
     """Generate daily holiday regressors from a calendar.
 
     Args:
-        calendar: The calendar with holidays.
-        start: Start date in ``"YYYY-MM-DD"`` format.
-        length: Number of days.
-        nonworking: Non-working day indices (1=Monday, 7=Sunday).
-        type: ``"Skip"``, ``"All"``, ``"NextWorkingDay"``, ``"PreviousWorkingDay"``.
-        single: If True, return a single column.
+        calendar (NationalCalendar): The calendar with holidays.
+        start (str): Start date in ``"YYYY-MM-DD"`` format.
+        length (int): Number of days.
+        nonworking (list[int] | None): Non-working day indices (1=Monday, 7=Sunday).
+        type (str): ``"Skip"``, ``"All"``, ``"NextWorkingDay"``, ``"PreviousWorkingDay"``.
+        single (bool): If True, return a single column.
 
     Returns:
-        Matrix with holiday dummy variables.
+        np.ndarray: Matrix with holiday dummy variables.
     """
     _ensure_jvm()
     import jpype
@@ -281,13 +281,13 @@ def long_term_mean(
     """Compute long-term means for calendar regressors.
 
     Args:
-        calendar: The calendar.
-        frequency: Annual frequency.
-        groups: Day-of-week grouping.
-        holiday: Day to aggregate holidays with.
+        calendar (NationalCalendar): The calendar.
+        frequency (int): Annual frequency.
+        groups (list[int] | None): Day-of-week grouping.
+        holiday (int): Day to aggregate holidays with.
 
     Returns:
-        Matrix of long-term means per group and period.
+        np.ndarray: Matrix of long-term means per group and period.
     """
     _ensure_jvm()
     import jpype
@@ -311,12 +311,12 @@ def easter_dates(year0: int, year1: int, julian: bool = False) -> list[str]:
     """Return Easter Sunday dates for a range of years.
 
     Args:
-        year0: Start year (inclusive).
-        year1: End year (inclusive).
-        julian: Use Julian calendar.
+        year0 (int): Start year (inclusive).
+        year1 (int): End year (inclusive).
+        julian (bool): Use Julian calendar.
 
     Returns:
-        List of date strings.
+        list[str]: List of date strings.
     """
     _ensure_jvm()
     import jpype
@@ -336,14 +336,14 @@ def stock_td(
     """Generate trading day regressors for stock series.
 
     Args:
-        frequency: Annual frequency.
-        start: (year, period) tuple.
-        length: Number of periods.
-        s: Optional time series to derive parameters from.
-        w: Day of month for stock reporting (31=last day).
+        frequency (int): Annual frequency.
+        start (tuple[int, int]): (year, period) tuple.
+        length (int): Number of periods.
+        s (pd.Series | None): Optional time series to derive parameters from.
+        w (int): Day of month for stock reporting (31=last day).
 
     Returns:
-        DataFrame with 6 trading day columns (Monday to Saturday).
+        pd.DataFrame: DataFrame with 6 trading day columns (Monday to Saturday).
     """
     _ensure_jvm()
     import jpype

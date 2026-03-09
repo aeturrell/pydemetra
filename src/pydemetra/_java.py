@@ -110,9 +110,12 @@ def start_jvm(java_home: str | None = None, max_heap: str = "512m") -> None:
     This is idempotent: calling it when the JVM is already running is a no-op.
 
     Args:
-        java_home: Path to a JDK installation. If ``None``, JPype discovers
-            it automatically (respecting ``JAVA_HOME``).
-        max_heap: Maximum heap size, e.g. ``"512m"`` or ``"2g"``.
+        java_home (str | None): Path to a JDK installation. If ``None``, JPype
+            discovers it automatically (respecting ``JAVA_HOME``).
+        max_heap (str): Maximum heap size, e.g. ``"512m"`` or ``"2g"``.
+
+    Raises:
+        FileNotFoundError: If no JAR files are found in the bundled JARs directory.
     """
     if jpype.isJVMStarted():
         return

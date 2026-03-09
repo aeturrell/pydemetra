@@ -63,11 +63,14 @@ def x13_spec(name: str = "rsa4") -> dict:
     """Create a default X-13 specification.
 
     Args:
-        name: Predefined specification name. One of
+        name (str): Predefined specification name. One of
             ``"rsa0"``, ``"rsa1"``, ``"rsa2c"``, ``"rsa3"``, ``"rsa4"``, ``"rsa5c"``.
 
     Returns:
-        A specification dict with ``regarima``, ``x11``, and ``benchmarking`` keys.
+        dict: A specification dict with ``regarima``, ``x11``, and ``benchmarking`` keys.
+
+    Raises:
+        ValueError: If *name* is not a recognised specification name.
     """
     _ensure_jvm()
     import jpype
@@ -85,12 +88,15 @@ def regarima_spec(name: str = "rg4") -> dict:
     """Create a default RegARIMA specification (X-13 flavour).
 
     Args:
-        name: Predefined specification name. One of
+        name (str): Predefined specification name. One of
             ``"rg0"``, ``"rg1"``, ``"rg2c"``, ``"rg3"``, ``"rg4"``, ``"rg5c"``.
 
     Returns:
-        A specification dict with ``basic``, ``transform``, ``outlier``, ``arima``,
-        ``automodel``, ``regression``, and ``estimate`` keys.
+        dict: A specification dict with ``basic``, ``transform``, ``outlier``, ``arima``,
+            ``automodel``, ``regression``, and ``estimate`` keys.
+
+    Raises:
+        ValueError: If *name* is not a recognised specification name.
     """
     _ensure_jvm()
     import jpype
@@ -109,7 +115,7 @@ def x11_spec() -> dict:
     """Create the default X-11 decomposition specification.
 
     Returns:
-        A specification dict with X-11 decomposition parameters.
+        dict: A specification dict with X-11 decomposition parameters.
     """
     _ensure_jvm()
     import jpype
@@ -149,22 +155,23 @@ def set_x11(
     Works on both X-11 specs and full X-13 specs (modifying the ``x11`` sub-dict).
 
     Args:
-        spec: An X-11 or X-13 specification dict.
-        mode: Decomposition mode.
-        seasonal_comp: Whether to compute a seasonal component.
-        seasonal_filter: Seasonal filter(s). A single string or list of strings.
-        henderson_filter: Henderson filter length (odd 3-101, or 0 for auto).
-        lsigma: Lower sigma threshold for extreme value detection.
-        usigma: Upper sigma threshold for extreme value detection.
-        fcasts: Number of forecasts (negative = years).
-        bcasts: Number of backcasts (negative = years).
-        calendar_sigma: Calendar sigma option.
-        sigma_vector: Sigma group assignments (values 1 or 2).
-        exclude_forecast: Exclude forecasts from extreme value detection.
-        bias: Bias correction (``"LEGACY"``).
+        spec (dict): An X-11 or X-13 specification dict.
+        mode (str | None): Decomposition mode.
+        seasonal_comp (bool | None): Whether to compute a seasonal component.
+        seasonal_filter (str | list[str] | None): Seasonal filter(s). A single string
+            or list of strings.
+        henderson_filter (int | None): Henderson filter length (odd 3-101, or 0 for auto).
+        lsigma (float | None): Lower sigma threshold for extreme value detection.
+        usigma (float | None): Upper sigma threshold for extreme value detection.
+        fcasts (int | None): Number of forecasts (negative = years).
+        bcasts (int | None): Number of backcasts (negative = years).
+        calendar_sigma (str | None): Calendar sigma option.
+        sigma_vector (list[int] | None): Sigma group assignments (values 1 or 2).
+        exclude_forecast (bool | None): Exclude forecasts from extreme value detection.
+        bias (str | None): Bias correction (``"LEGACY"``).
 
     Returns:
-        A modified copy of the specification.
+        dict: A modified copy of the specification.
     """
     spec = copy.deepcopy(spec)
 
@@ -298,14 +305,17 @@ def x13(
     """Run full X-13ARIMA-SEATS seasonal adjustment.
 
     Args:
-        ts: Univariate time series with PeriodIndex.
-        spec: Specification name or dict.
-        context: Modelling context with external regressors.
-        userdefined: Additional output variable names.
+        ts (pd.Series): Univariate time series with PeriodIndex.
+        spec (str | dict): Specification name or dict.
+        context (Any | None): Modelling context with external regressors.
+        userdefined (list[str] | None): Additional output variable names.
 
     Returns:
-        Dict with ``result``, ``estimation_spec``, and ``result_spec`` keys,
-        or ``None`` if processing failed.
+        dict | None: Dict with ``result``, ``estimation_spec``, and ``result_spec`` keys,
+            or ``None`` if processing failed.
+
+    Raises:
+        ValueError: If *spec* is a string that is not a recognised specification name.
     """
     _ensure_jvm()
     import jpype
@@ -346,13 +356,16 @@ def x13_fast(
     """Run X-13 seasonal adjustment (results only, faster).
 
     Args:
-        ts: Univariate time series with PeriodIndex.
-        spec: Specification name or dict.
-        context: Modelling context with external regressors.
-        userdefined: Additional output variable names.
+        ts (pd.Series): Univariate time series with PeriodIndex.
+        spec (str | dict): Specification name or dict.
+        context (Any | None): Modelling context with external regressors.
+        userdefined (list[str] | None): Additional output variable names.
 
     Returns:
-        Dict with X-13 results, or ``None`` if processing failed.
+        dict | None: Dict with X-13 results, or ``None`` if processing failed.
+
+    Raises:
+        ValueError: If *spec* is a string that is not a recognised specification name.
     """
     _ensure_jvm()
     import jpype
@@ -392,12 +405,12 @@ def x11(
     """Run pure X-11 decomposition (no RegARIMA pre-processing).
 
     Args:
-        ts: Univariate time series with PeriodIndex.
-        spec: X-11 specification dict. Defaults to ``x11_spec()``.
-        userdefined: Additional output variable names.
+        ts (pd.Series): Univariate time series with PeriodIndex.
+        spec (dict | None): X-11 specification dict. Defaults to ``x11_spec()``.
+        userdefined (list[str] | None): Additional output variable names.
 
     Returns:
-        Dict with X-11 D-series components, or ``None`` if processing failed.
+        dict | None: Dict with X-11 D-series components, or ``None`` if processing failed.
     """
     _ensure_jvm()
     import jpype
@@ -425,14 +438,17 @@ def x13_regarima(
     """Run full RegARIMA model (X-13 flavour).
 
     Args:
-        ts: Univariate time series with PeriodIndex.
-        spec: Specification name or dict.
-        context: Modelling context with external regressors.
-        userdefined: Additional output variable names.
+        ts (pd.Series): Univariate time series with PeriodIndex.
+        spec (str | dict): Specification name or dict.
+        context (Any | None): Modelling context with external regressors.
+        userdefined (list[str] | None): Additional output variable names.
 
     Returns:
-        Dict with ``result``, ``estimation_spec``, and ``result_spec`` keys,
-        or ``None`` if processing failed.
+        dict | None: Dict with ``result``, ``estimation_spec``, and ``result_spec`` keys,
+            or ``None`` if processing failed.
+
+    Raises:
+        ValueError: If *spec* is a string that is not a recognised specification name.
     """
     _ensure_jvm()
     import jpype

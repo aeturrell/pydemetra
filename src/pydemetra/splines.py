@@ -15,13 +15,13 @@ def periodic_bsplines(
     """Compute periodic B-splines.
 
     Args:
-        order: Order of the splines (4 for cubic).
-        period: Period of the splines.
-        knots: Knot positions in [0, period).
-        pos: Evaluation positions in [0, period).
+        order (int): Order of the splines (4 for cubic).
+        period (float): Period of the splines.
+        knots (list[float] | np.ndarray): Knot positions in [0, period).
+        pos (list[float] | np.ndarray): Evaluation positions in [0, period).
 
     Returns:
-        Matrix of shape (len(pos), len(knots)).
+        np.ndarray: Matrix of shape (len(pos), len(knots)).
     """
     _ensure_jvm()
     import jpype
@@ -44,12 +44,12 @@ def bsplines(
     """Compute B-splines.
 
     Args:
-        order: Order of the splines (4 for cubic).
-        knots: Knot positions.
-        pos: Evaluation positions.
+        order (int): Order of the splines (4 for cubic).
+        knots (list[float] | np.ndarray): Knot positions.
+        pos (list[float] | np.ndarray): Evaluation positions.
 
     Returns:
-        Matrix of shape (len(pos), n_basis).
+        np.ndarray: Matrix of shape (len(pos), n_basis).
     """
     _ensure_jvm()
     import jpype
@@ -71,12 +71,12 @@ def natural_cspline(
     """Natural cubic spline interpolation.
 
     Args:
-        x: Knot abscissas.
-        y: Knot ordinates.
-        pos: Evaluation positions.
+        x (list[float] | np.ndarray): Knot abscissas.
+        y (list[float] | np.ndarray): Knot ordinates.
+        pos (list[float] | np.ndarray): Evaluation positions.
 
     Returns:
-        Array of spline values at the requested positions.
+        np.ndarray: Array of spline values at the requested positions.
     """
     _ensure_jvm()
     import jpype
@@ -99,12 +99,12 @@ def monotonic_cspline(
     """Monotonic cubic spline interpolation.
 
     Args:
-        x: Knot abscissas.
-        y: Knot ordinates.
-        pos: Evaluation positions.
+        x (list[float] | np.ndarray): Knot abscissas.
+        y (list[float] | np.ndarray): Knot ordinates.
+        pos (list[float] | np.ndarray): Evaluation positions.
 
     Returns:
-        Array of spline values at the requested positions.
+        np.ndarray: Array of spline values at the requested positions.
     """
     _ensure_jvm()
     import jpype
@@ -127,12 +127,12 @@ def periodic_cspline(
     """Periodic cubic spline interpolation.
 
     Args:
-        x: Knot abscissas.
-        y: Knot ordinates.
-        pos: Evaluation positions.
+        x (list[float] | np.ndarray): Knot abscissas.
+        y (list[float] | np.ndarray): Knot ordinates.
+        pos (list[float] | np.ndarray): Evaluation positions.
 
     Returns:
-        Array of spline values at the requested positions.
+        np.ndarray: Array of spline values at the requested positions.
     """
     _ensure_jvm()
     import jpype
@@ -154,11 +154,11 @@ def periodic_csplines(
     """Periodic cardinal cubic splines.
 
     Args:
-        x: Knot abscissas.
-        pos: Evaluation positions.
+        x (list[float] | np.ndarray): Knot abscissas.
+        pos (list[float] | np.ndarray): Evaluation positions.
 
     Returns:
-        Matrix of shape (len(pos), len(x)).
+        np.ndarray: Matrix of shape (len(pos), len(x)).
     """
     _ensure_jvm()
     import jpype

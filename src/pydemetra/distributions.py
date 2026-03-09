@@ -15,11 +15,11 @@ def random_t(df: float, n: int) -> np.ndarray:
     """Generate random variates from a Student t-distribution.
 
     Args:
-        df: Degrees of freedom.
-        n: Number of observations.
+        df (float): Degrees of freedom.
+        n (int): Number of observations.
 
     Returns:
-        Array of random values.
+        np.ndarray: Array of random values.
     """
     _ensure_jvm()
     return np.array(_dist_class().randomsT(float(df), int(n)))
@@ -29,11 +29,11 @@ def density_t(df: float, x: np.ndarray | list[float]) -> np.ndarray:
     """Compute the PDF of a Student t-distribution.
 
     Args:
-        df: Degrees of freedom.
-        x: Quantiles.
+        df (float): Degrees of freedom.
+        x (np.ndarray | list[float]): Quantiles.
 
     Returns:
-        Array of density values.
+        np.ndarray: Array of density values.
     """
     _ensure_jvm()
     return np.array(_dist_class().densityT(float(df), np.asarray(x, dtype=np.float64)))
@@ -43,11 +43,11 @@ def cdf_t(df: float, x: np.ndarray | list[float]) -> np.ndarray:
     """Compute the CDF of a Student t-distribution.
 
     Args:
-        df: Degrees of freedom.
-        x: Quantiles.
+        df (float): Degrees of freedom.
+        x (np.ndarray | list[float]): Quantiles.
 
     Returns:
-        Array of cumulative probabilities.
+        np.ndarray: Array of cumulative probabilities.
     """
     _ensure_jvm()
     return np.array(_dist_class().cdfT(float(df), np.asarray(x, dtype=np.float64)))

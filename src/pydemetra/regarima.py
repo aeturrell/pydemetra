@@ -9,11 +9,11 @@ def regarima_coef(result: dict, component: str = "regression") -> np.ndarray | N
     """Extract coefficients from RegARIMA results.
 
     Args:
-        result: RegARIMA estimation result dict.
-        component: ``"regression"``, ``"arima"``, or ``"both"``.
+        result (dict): RegARIMA estimation result dict.
+        component (str): ``"regression"``, ``"arima"``, or ``"both"``.
 
     Returns:
-        Array of coefficients.
+        np.ndarray | None: Array of coefficients.
     """
     if component == "regression":
         return result.get("b")
@@ -32,10 +32,10 @@ def regarima_loglik(result: dict) -> Likelihood | None:
     """Extract log-likelihood from RegARIMA results.
 
     Args:
-        result: RegARIMA estimation result dict.
+        result (dict): RegARIMA estimation result dict.
 
     Returns:
-        Likelihood object.
+        Likelihood | None: Likelihood object.
     """
     return result.get("likelihood")
 
@@ -44,11 +44,11 @@ def regarima_vcov(result: dict, component: str = "regression") -> np.ndarray | N
     """Extract variance-covariance matrix from RegARIMA results.
 
     Args:
-        result: RegARIMA estimation result dict.
-        component: ``"regression"`` or ``"arima"``.
+        result (dict): RegARIMA estimation result dict.
+        component (str): ``"regression"`` or ``"arima"``.
 
     Returns:
-        Covariance matrix.
+        np.ndarray | None: Covariance matrix.
     """
     if component == "regression":
         return result.get("bcovariance")
@@ -62,10 +62,10 @@ def regarima_residuals(result: dict) -> np.ndarray | None:
     """Extract residuals from RegARIMA results.
 
     Args:
-        result: RegARIMA estimation result dict.
+        result (dict): RegARIMA estimation result dict.
 
     Returns:
-        Array of residuals.
+        np.ndarray | None: Array of residuals.
     """
     return result.get("residuals")
 
@@ -74,10 +74,10 @@ def regarima_summary(result: dict) -> str:
     """Generate a text summary of RegARIMA results.
 
     Args:
-        result: RegARIMA estimation result dict.
+        result (dict): RegARIMA estimation result dict.
 
     Returns:
-        Formatted summary string.
+        str: Formatted summary string.
     """
     lines = ["RegARIMA Estimation Summary", "=" * 40]
 

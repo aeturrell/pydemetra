@@ -8,11 +8,11 @@ def modelling_context(
     """Create a modelling context with calendars and external regressors.
 
     Args:
-        calendars: Dict mapping names to calendar objects (NationalCalendar, etc.).
-        variables: Dict mapping group names to dicts of named time series.
+        calendars (dict | None): Dict mapping names to calendar objects (NationalCalendar, etc.).
+        variables (dict | None): Dict mapping group names to dicts of named time series.
 
     Returns:
-        Dict with ``"calendars"`` and ``"variables"`` keys.
+        dict: Dict with ``"calendars"`` and ``"variables"`` keys.
     """
     if calendars is None:
         calendars = {}

@@ -24,15 +24,15 @@ def ljungbox(
     """Ljung-Box test for independence.
 
     Args:
-        data: Input data.
-        k: Number of auto-correlations.
-        lag: Lag between auto-correlations.
-        nhp: Number of hyper-parameters (degree of freedom correction).
-        sign: 1 for positive, -1 for negative, 0 for all auto-correlations.
-        mean: If True, compute mean-corrected auto-correlations.
+        data (np.ndarray): Input data.
+        k (int): Number of auto-correlations.
+        lag (int): Lag between auto-correlations.
+        nhp (int): Number of hyper-parameters (degree of freedom correction).
+        sign (int): 1 for positive, -1 for negative, 0 for all auto-correlations.
+        mean (bool): If True, compute mean-corrected auto-correlations.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     jtest = _tests_class().ljungBox(
@@ -64,12 +64,12 @@ def jarque_bera(data: np.ndarray, k: int = 0, sample: bool = True) -> Statistica
     """Jarque-Bera normality test.
 
     Args:
-        data: Input data.
-        k: Degrees of freedom to subtract for residuals.
-        sample: Use unbiased empirical moments.
+        data (np.ndarray): Input data.
+        k (int): Degrees of freedom to subtract for residuals.
+        sample (bool): Use unbiased empirical moments.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     jtest = _tests_class().jarqueBera(np.asarray(data, dtype=np.float64), int(k), sample)
@@ -94,12 +94,12 @@ def test_of_runs(data: np.ndarray, mean: bool = True, number: bool = True) -> St
     """Runs test around mean or median.
 
     Args:
-        data: Input data.
-        mean: If True, runs around the mean; otherwise around the median.
-        number: If True, test number of runs; otherwise test lengths.
+        data (np.ndarray): Input data.
+        mean (bool): If True, runs around the mean; otherwise around the median.
+        number (bool): If True, test number of runs; otherwise test lengths.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     jtest = _tests_class().testOfRuns(np.asarray(data, dtype=np.float64), mean, number)
@@ -110,11 +110,11 @@ def test_of_up_down_runs(data: np.ndarray, number: bool = True) -> StatisticalTe
     """Up-and-down runs test.
 
     Args:
-        data: Input data.
-        number: If True, test number of runs; otherwise test lengths.
+        data (np.ndarray): Input data.
+        number (bool): If True, test number of runs; otherwise test lengths.
 
     Returns:
-        StatisticalTest result.
+        StatisticalTest: StatisticalTest result.
     """
     _ensure_jvm()
     jtest = _tests_class().testOfUpDownRuns(np.asarray(data, dtype=np.float64), number)
@@ -125,12 +125,12 @@ def autocorrelations(data: np.ndarray, mean: bool = True, n: int = 15) -> np.nda
     """Compute autocorrelation function.
 
     Args:
-        data: Input data.
-        mean: Mean correction.
-        n: Maximum lag.
+        data (np.ndarray): Input data.
+        mean (bool): Mean correction.
+        n (int): Maximum lag.
 
     Returns:
-        Array of autocorrelation values.
+        np.ndarray: Array of autocorrelation values.
     """
     _ensure_jvm()
     return np.array(
@@ -142,12 +142,12 @@ def autocorrelations_partial(data: np.ndarray, mean: bool = True, n: int = 15) -
     """Compute partial autocorrelation function.
 
     Args:
-        data: Input data.
-        mean: Mean correction.
-        n: Maximum lag.
+        data (np.ndarray): Input data.
+        mean (bool): Mean correction.
+        n (int): Maximum lag.
 
     Returns:
-        Array of partial autocorrelation values.
+        np.ndarray: Array of partial autocorrelation values.
     """
     _ensure_jvm()
     return np.array(
@@ -159,12 +159,12 @@ def autocorrelations_inverse(data: np.ndarray, nar: int = 30, n: int = 15) -> np
     """Compute inverse autocorrelation function.
 
     Args:
-        data: Input data.
-        nar: Number of AR lags for computation.
-        n: Maximum lag.
+        data (np.ndarray): Input data.
+        nar (int): Number of AR lags for computation.
+        n (int): Maximum lag.
 
     Returns:
-        Array of inverse autocorrelation values.
+        np.ndarray: Array of inverse autocorrelation values.
     """
     _ensure_jvm()
     return np.array(
@@ -178,12 +178,12 @@ def mad(data: np.ndarray, centile: float = 50.0, median_corrected: bool = True) 
     """Compute robust median absolute deviation.
 
     Args:
-        data: Input data.
-        centile: Percentage of data used.
-        median_corrected: If True, correct for median.
+        data (np.ndarray): Input data.
+        centile (float): Percentage of data used.
+        median_corrected (bool): If True, correct for median.
 
     Returns:
-        The MAD value.
+        float: The MAD value.
     """
     _ensure_jvm()
     return float(

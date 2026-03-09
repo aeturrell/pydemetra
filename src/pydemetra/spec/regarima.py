@@ -13,14 +13,14 @@ def add_outlier(
     """Add an outlier to a RegARIMA specification.
 
     Args:
-        spec: The specification dict.
-        type: Outlier type (``"AO"``, ``"LS"``, ``"TC"``, ``"SO"``).
-        date: Date in ``"YYYY-MM-DD"`` format.
-        name: Name for the outlier.
-        coef: Initial coefficient value.
+        spec (dict): The specification dict.
+        type (str): Outlier type (``"AO"``, ``"LS"``, ``"TC"``, ``"SO"``).
+        date (str): Date in ``"YYYY-MM-DD"`` format.
+        name (str | None): Name for the outlier.
+        coef (float): Initial coefficient value.
 
     Returns:
-        Modified specification dict.
+        dict: Modified specification dict.
     """
     spec = copy.deepcopy(spec)
     if "outliers" not in spec:
@@ -47,13 +47,13 @@ def remove_outlier(
     """Remove outliers from a RegARIMA specification.
 
     Args:
-        spec: The specification dict.
-        type: Filter by outlier type.
-        date: Filter by date.
-        name: Filter by name.
+        spec (dict): The specification dict.
+        type (str | None): Filter by outlier type.
+        date (str | None): Filter by date.
+        name (str | None): Filter by name.
 
     Returns:
-        Modified specification dict.
+        dict: Modified specification dict.
     """
     spec = copy.deepcopy(spec)
     if "outliers" not in spec:
@@ -80,14 +80,14 @@ def add_ramp(
     """Add a ramp to a RegARIMA specification.
 
     Args:
-        spec: The specification dict.
-        start: Start date in ``"YYYY-MM-DD"`` format.
-        end: End date in ``"YYYY-MM-DD"`` format.
-        name: Name for the ramp.
-        coef: Initial coefficient value.
+        spec (dict): The specification dict.
+        start (str): Start date in ``"YYYY-MM-DD"`` format.
+        end (str): End date in ``"YYYY-MM-DD"`` format.
+        name (str | None): Name for the ramp.
+        coef (float): Initial coefficient value.
 
     Returns:
-        Modified specification dict.
+        dict: Modified specification dict.
     """
     spec = copy.deepcopy(spec)
     if "ramps" not in spec:
@@ -114,13 +114,13 @@ def remove_ramp(
     """Remove ramps from a RegARIMA specification.
 
     Args:
-        spec: The specification dict.
-        start: Filter by start date.
-        end: Filter by end date.
-        name: Filter by name.
+        spec (dict): The specification dict.
+        start (str | None): Filter by start date.
+        end (str | None): Filter by end date.
+        name (str | None): Filter by name.
 
     Returns:
-        Modified specification dict.
+        dict: Modified specification dict.
     """
     spec = copy.deepcopy(spec)
     if "ramps" not in spec:

@@ -26,17 +26,17 @@ def sarima_model(
     """Create a seasonal ARIMA model (Box-Jenkins).
 
     Args:
-        name: Name of the model.
-        period: Period of the model.
-        phi: Coefficients of the regular AR polynomial. True signs.
-        d: Regular differencing order.
-        theta: Coefficients of the regular MA polynomial. True signs.
-        bphi: Coefficients of the seasonal AR polynomial. True signs.
-        bd: Seasonal differencing order.
-        btheta: Coefficients of the seasonal MA polynomial. True signs.
+        name (str): Name of the model.
+        period (int): Period of the model.
+        phi (list[float] | None): Coefficients of the regular AR polynomial. True signs.
+        d (int): Regular differencing order.
+        theta (list[float] | None): Coefficients of the regular MA polynomial. True signs.
+        bphi (list[float] | None): Coefficients of the seasonal AR polynomial. True signs.
+        bd (int): Seasonal differencing order.
+        btheta (list[float] | None): Coefficients of the seasonal MA polynomial. True signs.
 
     Returns:
-        A SarimaModel dataclass.
+        SarimaModel: A SarimaModel dataclass.
     """
     return SarimaModel(
         name=name,
@@ -137,12 +137,12 @@ def sarima_properties(model: SarimaModel, nspectrum: int = 601, nacf: int = 36) 
     """Compute the ACF and spectrum of a SARIMA model.
 
     Args:
-        model: A SarimaModel.
-        nspectrum: Number of spectrum points in [0, pi].
-        nacf: Maximum lag for ACF.
+        model (SarimaModel): A SarimaModel.
+        nspectrum (int): Number of spectrum points in [0, pi].
+        nacf (int): Maximum lag for ACF.
 
     Returns:
-        Dict with keys ``"acf"`` and ``"spectrum"``.
+        dict: Dict with keys ``"acf"`` and ``"spectrum"``.
     """
     _ensure_jvm()
     import jpype
@@ -164,14 +164,14 @@ def sarima_random(
     """Simulate a SARIMA series.
 
     Args:
-        model: A SarimaModel.
-        length: Length of the output series.
-        stde: Standard deviation of innovations.
-        tdegree: Degrees of freedom for T distribution (0 for normal).
-        seed: Random seed (negative for random).
+        model (SarimaModel): A SarimaModel.
+        length (int): Length of the output series.
+        stde (float): Standard deviation of innovations.
+        tdegree (int): Degrees of freedom for T distribution (0 for normal).
+        seed (int): Random seed (negative for random).
 
     Returns:
-        A numpy array with the simulated series.
+        np.ndarray: A numpy array with the simulated series.
     """
     _ensure_jvm()
     import jpype
@@ -199,12 +199,12 @@ def sarima_decompose(
     """Decompose a SARIMA model into trend, seasonal, and irregular components.
 
     Args:
-        model: A SarimaModel.
-        rmod: Trend threshold.
-        epsphi: Seasonal tolerance (in degrees).
+        model (SarimaModel): A SarimaModel.
+        rmod (float): Trend threshold.
+        epsphi (float): Seasonal tolerance (in degrees).
 
     Returns:
-        A UcarimaModel, or None if decomposition fails.
+        UcarimaModel | None: A UcarimaModel, or None if decomposition fails.
     """
     _ensure_jvm()
     import jpype
@@ -227,14 +227,14 @@ def arima_model(
     """Create an ARIMA model.
 
     Args:
-        name: Name of the model.
-        ar: AR polynomial coefficients. True signs.
-        delta: Non-stationary AR polynomial.
-        ma: MA polynomial coefficients. True signs.
-        variance: Innovation variance.
+        name (str): Name of the model.
+        ar (list[float] | None): AR polynomial coefficients. True signs.
+        delta (list[float] | None): Non-stationary AR polynomial.
+        ma (list[float] | None): MA polynomial coefficients. True signs.
+        variance (float): Innovation variance.
 
     Returns:
-        An ArimaModel dataclass.
+        ArimaModel: An ArimaModel dataclass.
     """
     return ArimaModel(
         name=name,
@@ -249,10 +249,10 @@ def arima_sum(*components: ArimaModel) -> ArimaModel:
     """Sum ARIMA models with independent innovations.
 
     Args:
-        *components: ARIMA models to sum.
+        *components (ArimaModel): ARIMA models to sum.
 
     Returns:
-        The summed ArimaModel.
+        ArimaModel: The summed ArimaModel.
     """
     _ensure_jvm()
     import jpype
@@ -268,12 +268,12 @@ def arima_difference(left: ArimaModel, right: ArimaModel, simplify: bool = True)
     """Subtract one ARIMA model from another.
 
     Args:
-        left: Left operand.
-        right: Right operand.
-        simplify: Simplify common roots.
+        left (ArimaModel): Left operand.
+        right (ArimaModel): Right operand.
+        simplify (bool): Simplify common roots.
 
     Returns:
-        The difference ArimaModel.
+        ArimaModel: The difference ArimaModel.
     """
     _ensure_jvm()
     jleft = _r2jd_arima(left)
@@ -286,12 +286,12 @@ def arima_properties(model: ArimaModel, nspectrum: int = 601, nac: int = 36) -> 
     """Compute ACF and spectrum of an ARIMA model.
 
     Args:
-        model: An ArimaModel.
-        nspectrum: Number of spectrum points.
-        nac: Maximum lag for auto-covariances.
+        model (ArimaModel): An ArimaModel.
+        nspectrum (int): Number of spectrum points.
+        nac (int): Maximum lag for auto-covariances.
 
     Returns:
-        Dict with keys ``"acf"`` and ``"spectrum"``.
+        dict: Dict with keys ``"acf"`` and ``"spectrum"``.
     """
     _ensure_jvm()
     import jpype
@@ -312,13 +312,13 @@ def ucarima_model(
     """Create a UCARIMA model from ARIMA components with independent innovations.
 
     Args:
-        model: The reduced model. If None, computed as the sum of components.
-        components: The ARIMA component models.
-        complements: Complements of some components.
-        checkmodel: Whether to validate the model.
+        model (ArimaModel | None): The reduced model. If None, computed as the sum of components.
+        components (list[ArimaModel] | None): The ARIMA component models.
+        complements (list[ArimaModel] | None): Complements of some components.
+        checkmodel (bool): Whether to validate the model.
 
     Returns:
-        A UcarimaModel.
+        UcarimaModel: A UcarimaModel.
     """
     components = components or []
     complements = complements or []
@@ -337,14 +337,14 @@ def ucarima_wk(
     """Compute Wiener-Kolmogorov estimators for a UCARIMA component.
 
     Args:
-        ucm: A UcarimaModel.
-        cmp: 1-based index of the component.
-        signal: True for signal, False for noise.
-        nspectrum: Number of spectrum points.
-        nwk: Number of filter weights.
+        ucm (UcarimaModel): A UcarimaModel.
+        cmp (int): 1-based index of the component.
+        signal (bool): True for signal, False for noise.
+        nspectrum (int): Number of spectrum points.
+        nwk (int): Number of filter weights.
 
     Returns:
-        Dict with ``"spectrum"``, ``"filter"``, and ``"gain2"`` keys.
+        dict: Dict with ``"spectrum"``, ``"filter"``, and ``"gain2"`` keys.
     """
     _ensure_jvm()
     import jpype
@@ -365,12 +365,12 @@ def ucarima_canonical(ucm: UcarimaModel, cmp: int = 0, adjust: bool = True) -> U
     """Make a UCARIMA model canonical.
 
     Args:
-        ucm: A UcarimaModel.
-        cmp: Index of component to receive noise (0 for new component).
-        adjust: Ensure positive pseudo-spectrum.
+        ucm (UcarimaModel): A UcarimaModel.
+        cmp (int): Index of component to receive noise (0 for new component).
+        adjust (bool): Ensure positive pseudo-spectrum.
 
     Returns:
-        A new canonical UcarimaModel.
+        UcarimaModel: A new canonical UcarimaModel.
     """
     _ensure_jvm()
     import jpype
@@ -385,12 +385,12 @@ def ucarima_estimate(x: np.ndarray, ucm: UcarimaModel, stdev: bool = True) -> np
     """Estimate UCARIMA components from data.
 
     Args:
-        x: Input time series values.
-        ucm: A UcarimaModel.
-        stdev: Whether to include standard deviations.
+        x (np.ndarray): Input time series values.
+        ucm (UcarimaModel): A UcarimaModel.
+        stdev (bool): Whether to include standard deviations.
 
     Returns:
-        A matrix with component estimates (and standard deviations if requested).
+        np.ndarray: A matrix with component estimates (and standard deviations if requested).
     """
     _ensure_jvm()
     import jpype
@@ -412,15 +412,16 @@ def sarima_estimate(
     """Estimate a SARIMA model by maximum likelihood.
 
     Args:
-        x: Input time series values.
-        order: (p, d, q) non-seasonal orders.
-        seasonal: Dict with ``"order"`` and ``"period"`` keys, or a (P, D, Q) tuple.
-        mean: Include intercept.
-        xreg: External regressors matrix.
-        eps: Convergence precision.
+        x (np.ndarray): Input time series values.
+        order (tuple[int, int, int]): (p, d, q) non-seasonal orders.
+        seasonal (dict | tuple[int, int, int] | None): Dict with ``"order"`` and
+            ``"period"`` keys, or a (P, D, Q) tuple.
+        mean (bool): Include intercept.
+        xreg (np.ndarray | None): External regressors matrix.
+        eps (float): Convergence precision.
 
     Returns:
-        Dict with estimation results.
+        dict: Dict with estimation results.
     """
     _ensure_jvm()
     import jpype
@@ -488,15 +489,16 @@ def sarima_hannan_rissanen(
     """Estimate SARIMA model using the Hannan-Rissanen method.
 
     Args:
-        x: Input time series values.
-        order: (p, d, q) non-seasonal orders.
-        seasonal: Dict with ``"order"`` and ``"period"`` keys, or (P, D, Q) tuple.
-        initialization: ``"Ols"``, ``"Levinson"``, or ``"Burg"``.
-        bias_correction: Apply bias correction.
-        final_correction: Apply final correction (Tramo style).
+        x (np.ndarray): Input time series values.
+        order (tuple[int, int, int]): (p, d, q) non-seasonal orders.
+        seasonal (dict | tuple[int, int, int] | None): Dict with ``"order"`` and
+            ``"period"`` keys, or (P, D, Q) tuple.
+        initialization (str): ``"Ols"``, ``"Levinson"``, or ``"Burg"``.
+        bias_correction (bool): Apply bias correction.
+        final_correction (bool): Apply final correction (Tramo style).
 
     Returns:
-        An estimated SarimaModel.
+        SarimaModel: An estimated SarimaModel.
     """
     _ensure_jvm()
     import jpype

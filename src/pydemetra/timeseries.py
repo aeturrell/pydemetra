@@ -42,13 +42,13 @@ def aggregate(
     """Aggregate a time series to a lower frequency.
 
     Args:
-        s: Input time series with PeriodIndex.
-        nfreq: New frequency (must divide the original frequency).
-        conversion: ``"Sum"``, ``"Average"``, ``"First"``, ``"Last"``, ``"Min"``, ``"Max"``.
-        complete: If True, incomplete boundary periods are set to NaN.
+        s (pd.Series): Input time series with PeriodIndex.
+        nfreq (int): New frequency (must divide the original frequency).
+        conversion (str): ``"Sum"``, ``"Average"``, ``"First"``, ``"Last"``, ``"Min"``, ``"Max"``.
+        complete (bool): If True, incomplete boundary periods are set to NaN.
 
     Returns:
-        Aggregated series at the new frequency.
+        pd.Series | None: Aggregated series at the new frequency.
     """
     _ensure_jvm()
     import jpype
@@ -65,10 +65,10 @@ def clean_extremities(s: pd.Series) -> pd.Series | None:
     """Remove missing values at the beginning and end of a series.
 
     Args:
-        s: Input time series.
+        s (pd.Series): Input time series.
 
     Returns:
-        Cleaned series without leading/trailing NaN values.
+        pd.Series | None: Cleaned series without leading/trailing NaN values.
     """
     _ensure_jvm()
     import jpype
@@ -85,11 +85,14 @@ def ts_interpolate(s: pd.Series, method: str = "airline") -> pd.Series | None:
     """Interpolate missing values in a time series.
 
     Args:
-        s: Input time series with missing values.
-        method: ``"airline"`` or ``"average"``.
+        s (pd.Series): Input time series with missing values.
+        method (str): ``"airline"`` or ``"average"``.
 
     Returns:
-        Interpolated series.
+        pd.Series | None: Interpolated series.
+
+    Raises:
+        ValueError: If *method* is not recognised.
     """
     _ensure_jvm()
     import jpype
@@ -113,12 +116,12 @@ def ts_adjust(
     """Multiplicative adjustment for leap year or length of periods.
 
     Args:
-        s: Input time series.
-        method: ``"LeapYear"`` or ``"LengthOfPeriod"``.
-        reverse: If True, reverse the adjustment.
+        s (pd.Series): Input time series.
+        method (str): ``"LeapYear"`` or ``"LengthOfPeriod"``.
+        reverse (bool): If True, reverse the adjustment.
 
     Returns:
-        Adjusted series.
+        pd.Series | None: Adjusted series.
     """
     _ensure_jvm()
     import jpype
@@ -135,11 +138,11 @@ def days_of(s: pd.Series, pos: int = 1) -> list[datetime.date]:
     """Return the starting dates for each period of a time series.
 
     Args:
-        s: Input time series.
-        pos: Position of the first considered period.
+        s (pd.Series): Input time series.
+        pos (int): Position of the first considered period.
 
     Returns:
-        List of dates.
+        list[datetime.date]: List of dates.
     """
     _ensure_jvm()
     import jpype
@@ -155,11 +158,11 @@ def tsdata_of(values: list[float], dates: list[str]) -> pd.Series | None:
     """Create a time series from values and dates.
 
     Args:
-        values: Numeric values.
-        dates: Date strings in ``"YYYY-MM-DD"`` format.
+        values (list[float]): Numeric values.
+        dates (list[str]): Date strings in ``"YYYY-MM-DD"`` format.
 
     Returns:
-        A pandas Series with automatically detected frequency.
+        pd.Series | None: A pandas Series with automatically detected frequency.
     """
     _ensure_jvm()
     import jpype
@@ -176,11 +179,11 @@ def compare_annual_totals(raw: pd.Series, sa: pd.Series) -> float:
     """Compare the annual totals of raw and seasonally adjusted series.
 
     Args:
-        raw: Raw time series.
-        sa: Seasonally adjusted time series.
+        raw (pd.Series): Raw time series.
+        sa (pd.Series): Seasonally adjusted time series.
 
     Returns:
-        Largest annual difference as a percentage of SA average.
+        float: Largest annual difference as a percentage of SA average.
     """
     _ensure_jvm()
     import jpype
