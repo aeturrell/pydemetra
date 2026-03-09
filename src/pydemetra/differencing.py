@@ -16,6 +16,9 @@ def do_stationary(data: np.ndarray | pd.Series, period: int | None = None) -> di
     Returns:
         dict: Dict with ``"ddata"`` (differenced data), ``"mean"`` (mean correction flag),
             and ``"differences"`` (lag/order matrix).
+
+    Raises:
+        ValueError: If *period* is None and cannot be inferred from *data*.
     """
     _ensure_jvm()
     import jpype
@@ -26,6 +29,8 @@ def do_stationary(data: np.ndarray | pd.Series, period: int | None = None) -> di
         freq = data.index.freqstr
         period = 12 if "M" in freq else (4 if "Q" in freq else 1)
 
+    if period is None:
+        raise ValueError("period must be specified or data must have a PeriodIndex")
     vals = np.asarray(data, dtype=np.float64)
     Differencing = jpype.JClass("jdplus.toolkit.base.r.modelling.Differencing")
     jst = Differencing.doStationary(vals, int(period))
@@ -65,6 +70,9 @@ def differencing_fast(
 
     Returns:
         dict: Dict with ``"ddata"``, ``"mean"``, and ``"differences"`` keys.
+
+    Raises:
+        ValueError: If *period* is None and cannot be inferred from *data*.
     """
     _ensure_jvm()
     import jpype
@@ -75,6 +83,8 @@ def differencing_fast(
         freq = data.index.freqstr
         period = 12 if "M" in freq else (4 if "Q" in freq else 1)
 
+    if period is None:
+        raise ValueError("period must be specified or data must have a PeriodIndex")
     vals = np.asarray(data, dtype=np.float64)
     Differencing = jpype.JClass("jdplus.toolkit.base.r.modelling.Differencing")
     jst = Differencing.fastDifferencing(vals, int(period), mad, float(centile), float(k))

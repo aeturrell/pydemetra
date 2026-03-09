@@ -269,7 +269,9 @@ def holidays(
         type,
         single,
     )
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def long_term_mean(
@@ -304,7 +306,9 @@ def long_term_mean(
         np.array(groups, dtype=np.int32),
         int(holiday),
     )
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def easter_dates(year0: int, year1: int, julian: bool = False) -> list[str]:

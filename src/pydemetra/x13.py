@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import copy
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import pandas as pd
 
@@ -44,8 +44,13 @@ from pydemetra._converters import (
     r2p_uservars as _r2p_uservars,
 )
 from pydemetra._java import _ensure_jvm
-from pydemetra._proto import modelling_pb2, x13_pb2
 from pydemetra._protobuf import enum_extract, enum_of, enum_sextract, enum_sof
+
+if TYPE_CHECKING:
+    modelling_pb2: Any
+    x13_pb2: Any
+else:
+    from pydemetra._proto import modelling_pb2, x13_pb2
 
 # ---------------------------------------------------------------------------
 # Predefined spec names
@@ -178,24 +183,18 @@ def set_x11(
     if "x11" in spec:
         spec["x11"] = _set_x11_inner(
             spec["x11"],
-            **{
-                k: v
-                for k, v in {
-                    "mode": mode,
-                    "seasonal_comp": seasonal_comp,
-                    "seasonal_filter": seasonal_filter,
-                    "henderson_filter": henderson_filter,
-                    "lsigma": lsigma,
-                    "usigma": usigma,
-                    "fcasts": fcasts,
-                    "bcasts": bcasts,
-                    "calendar_sigma": calendar_sigma,
-                    "sigma_vector": sigma_vector,
-                    "exclude_forecast": exclude_forecast,
-                    "bias": bias,
-                }.items()
-                if v is not None
-            },
+            mode=mode,
+            seasonal_comp=seasonal_comp,
+            seasonal_filter=seasonal_filter,
+            henderson_filter=henderson_filter,
+            lsigma=lsigma,
+            usigma=usigma,
+            fcasts=fcasts,
+            bcasts=bcasts,
+            calendar_sigma=calendar_sigma,
+            sigma_vector=sigma_vector,
+            exclude_forecast=exclude_forecast,
+            bias=bias,
         )
         return spec
 

@@ -43,21 +43,27 @@ def ljungbox(
         int(sign),
         mean,
     )
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def bowman_shenton(data: np.ndarray) -> StatisticalTest:
     """Bowman-Shenton normality test."""
     _ensure_jvm()
     jtest = _tests_class().bowmanShenton(np.asarray(data, dtype=np.float64))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def doornik_hansen(data: np.ndarray) -> StatisticalTest:
     """Doornik-Hansen normality test."""
     _ensure_jvm()
     jtest = _tests_class().doornikHansen(np.asarray(data, dtype=np.float64))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def jarque_bera(data: np.ndarray, k: int = 0, sample: bool = True) -> StatisticalTest:
@@ -73,21 +79,27 @@ def jarque_bera(data: np.ndarray, k: int = 0, sample: bool = True) -> Statistica
     """
     _ensure_jvm()
     jtest = _tests_class().jarqueBera(np.asarray(data, dtype=np.float64), int(k), sample)
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def skewness(data: np.ndarray) -> StatisticalTest:
     """Skewness test."""
     _ensure_jvm()
     jtest = _tests_class().skewness(np.asarray(data, dtype=np.float64))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def kurtosis(data: np.ndarray) -> StatisticalTest:
     """Kurtosis test."""
     _ensure_jvm()
     jtest = _tests_class().kurtosis(np.asarray(data, dtype=np.float64))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def test_of_runs(data: np.ndarray, mean: bool = True, number: bool = True) -> StatisticalTest:
@@ -103,7 +115,9 @@ def test_of_runs(data: np.ndarray, mean: bool = True, number: bool = True) -> St
     """
     _ensure_jvm()
     jtest = _tests_class().testOfRuns(np.asarray(data, dtype=np.float64), mean, number)
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def test_of_up_down_runs(data: np.ndarray, number: bool = True) -> StatisticalTest:
@@ -118,7 +132,9 @@ def test_of_up_down_runs(data: np.ndarray, number: bool = True) -> StatisticalTe
     """
     _ensure_jvm()
     jtest = _tests_class().testOfUpDownRuns(np.asarray(data, dtype=np.float64), number)
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def autocorrelations(data: np.ndarray, mean: bool = True, n: int = 15) -> np.ndarray:

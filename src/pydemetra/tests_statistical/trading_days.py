@@ -31,7 +31,9 @@ def td_f(
     jts = r2jd_tsdata(s)
     TDTests = jpype.JClass("jdplus.toolkit.base.r.modelling.TradingDaysTests")
     jtest = TDTests.fTest(jts, model, int(nyears))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def td_canova_hansen(
@@ -100,4 +102,6 @@ def td_time_varying(
         np.array(groups, dtype=np.int32),
         contrasts,
     )
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result

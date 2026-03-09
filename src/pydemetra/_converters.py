@@ -55,7 +55,7 @@ def r2jd_tsdata(s: pd.Series) -> object:
 
     TsUtility = jpype.JClass("jdplus.toolkit.base.r.timeseries.TsUtility")
     values = np.asarray(s.values, dtype=np.float64)
-    jvalues = jpype.JArray(jpype.JDouble)(values.tolist())
+    jvalues = jpype.JArray(jpype.JDouble)(values.tolist())  # type: ignore[call-non-callable]
     return TsUtility.of(
         int(annual_freq),
         int(start_year),
@@ -78,7 +78,7 @@ def jd2r_tsdata(jts: object) -> pd.Series | None:
     year = int(pstart[1])
     period = int(pstart[2])
 
-    jvalues = jts.getValues()
+    jvalues = jts.getValues()  # type: ignore[unresolved-attribute]
     values = np.array(jvalues.toArray())
 
     if len(values) == 0:
@@ -107,9 +107,9 @@ def jd2r_matrix(jm: object) -> np.ndarray | None:
     _ensure_jvm()
     if jm is None:
         return None
-    nr = int(jm.getRowsCount())
-    nc = int(jm.getColumnsCount())
-    d = np.array(jm.toArray())
+    nr = int(jm.getRowsCount())  # type: ignore[unresolved-attribute]
+    nc = int(jm.getColumnsCount())  # type: ignore[unresolved-attribute]
+    d = np.array(jm.toArray())  # type: ignore[unresolved-attribute]
     return d.reshape((nr, nc), order="F")
 
 
@@ -205,7 +205,7 @@ def r2p_parameter(r: Parameter | None) -> toolkit_pb2.Parameter:
 
 def p2r_parameters(params: list) -> list[Parameter]:
     """Convert a list of protobuf Parameters to Python Parameters."""
-    return [p2r_parameter(p) for p in params]
+    return [p for p in (p2r_parameter(x) for x in params) if p is not None]
 
 
 def p2r_test(p: toolkit_pb2.StatisticalTest | None) -> StatisticalTest | None:

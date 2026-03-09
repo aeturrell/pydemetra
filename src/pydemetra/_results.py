@@ -13,9 +13,9 @@ def _jd2r_test(jtest: object) -> StatisticalTest | None:
     _ensure_jvm()
     if jtest is None:
         return None
-    desc = str(jtest.getDescription())
-    val = float(jtest.getValue())
-    pval = float(jtest.getPvalue())
+    desc = str(jtest.getDescription())  # type: ignore[unresolved-attribute]
+    val = float(jtest.getValue())  # type: ignore[unresolved-attribute]
+    pval = float(jtest.getPvalue())  # type: ignore[unresolved-attribute]
     return StatisticalTest(val, max(0.0, min(1.0, pval)), desc)
 
 

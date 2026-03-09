@@ -9,16 +9,16 @@ from pydemetra._java import _ensure_jvm
 def periodic_bsplines(
     order: int = 4,
     period: float = 1.0,
-    knots: list[float] | np.ndarray = (),
-    pos: list[float] | np.ndarray = (),
+    knots: list[float] | np.ndarray | tuple[()] = (),
+    pos: list[float] | np.ndarray | tuple[()] = (),
 ) -> np.ndarray:
     """Compute periodic B-splines.
 
     Args:
         order (int): Order of the splines (4 for cubic).
         period (float): Period of the splines.
-        knots (list[float] | np.ndarray): Knot positions in [0, period).
-        pos (list[float] | np.ndarray): Evaluation positions in [0, period).
+        knots (list[float] | np.ndarray | tuple[()]): Knot positions in [0, period).
+        pos (list[float] | np.ndarray | tuple[()]): Evaluation positions in [0, period).
 
     Returns:
         np.ndarray: Matrix of shape (len(pos), len(knots)).
@@ -33,20 +33,22 @@ def periodic_bsplines(
         np.asarray(knots, dtype=np.float64),
         np.asarray(pos, dtype=np.float64),
     )
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def bsplines(
     order: int = 4,
-    knots: list[float] | np.ndarray = (),
-    pos: list[float] | np.ndarray = (),
+    knots: list[float] | np.ndarray | tuple[()] = (),
+    pos: list[float] | np.ndarray | tuple[()] = (),
 ) -> np.ndarray:
     """Compute B-splines.
 
     Args:
         order (int): Order of the splines (4 for cubic).
-        knots (list[float] | np.ndarray): Knot positions.
-        pos (list[float] | np.ndarray): Evaluation positions.
+        knots (list[float] | np.ndarray | tuple[()]): Knot positions.
+        pos (list[float] | np.ndarray | tuple[()]): Evaluation positions.
 
     Returns:
         np.ndarray: Matrix of shape (len(pos), n_basis).
@@ -60,7 +62,9 @@ def bsplines(
         np.asarray(knots, dtype=np.float64),
         np.asarray(pos, dtype=np.float64),
     )
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def natural_cspline(
@@ -168,4 +172,6 @@ def periodic_csplines(
         np.asarray(x, dtype=np.float64),
         np.asarray(pos, dtype=np.float64),
     )
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result

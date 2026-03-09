@@ -19,3 +19,10 @@ def modelling_context(
     if variables is None:
         variables = {}
     return {"calendars": calendars, "variables": variables}
+
+
+def _r2jd_modellingcontext(context: dict) -> object:
+    raise NotImplementedError(
+        "Custom modelling context conversion is not yet implemented. "
+        "Use a string spec name instead, or pass context=None."
+    )

@@ -1,8 +1,40 @@
 # pydemetra
 
+![package logo](icon.svg)
+
 Python front-end to [JDemetra+](https://github.com/jdemetra), which is a [Java](https://www.java.com/en/) package for **seasonal adjustment**.
 
 Want to just get going? Head to the [Quick Start](quick_start.ipynb) page.
+
+This project has no affiliation the original JDemetra+, but we're grateful to its creators!
+
+## Functionality
+
+pydemetra was inspired by the [rjdverse](https://github.com/rjdverse) R front-end to JDemetra+. Not all of that functionality is implemented yet.
+
+### Implemented
+
+- **X-13ARIMA-SEATS** seasonal adjustment (X-13, X-11, RegARIMA)
+- **Calendars and trading days** — national calendars, fixed/Easter/weekday holidays, trading day regressors
+- **ARIMA modelling** — SARIMA, UCARIMA, estimation, decomposition, simulation
+- **Regression variables** — outliers (AO, LS, TC, SO), ramps, interventions, Easter/leap-year effects, periodic dummies, trigonometric variables
+- **Statistical tests** — seasonality, normality, trading days, autocorrelation
+- **Time series utilities** — aggregation, interpolation, differencing, length-of-period adjustment
+- **Distributions** — t, chi-squared, gamma, inverse gamma, inverse Gaussian
+- **Splines** — B-splines, natural/monotonic/periodic cubic splines
+- **Benchmarking specification**
+
+### Not implemented
+
+
+- **TRAMO-SEATS** seasonal adjustment
+- **STL** decomposition
+- **State space** models
+- **High-frequency** seasonal adjustment
+- **Extended X-11**
+- **Benchmarking and temporal disaggregation**
+- **Revision analysis**
+- **Trend-cycle filters**
 
 ## Prerequisites
 

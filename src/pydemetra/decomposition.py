@@ -4,21 +4,21 @@ from pydemetra._models import SaDecomposition
 
 
 def sa_decomposition(
-    y: object = None,
-    sa: object = None,
-    t: object = None,
-    s: object = None,
-    i: object = None,
+    y: dict | None = None,
+    sa: dict | None = None,
+    t: dict | None = None,
+    s: dict | None = None,
+    i: dict | None = None,
     mul: bool = True,
 ) -> SaDecomposition:
     """Create a seasonal adjustment decomposition result.
 
     Args:
-        y (object): Original series component.
-        sa (object): Seasonally adjusted component.
-        t (object): Trend component.
-        s (object): Seasonal component.
-        i (object): Irregular component.
+        y (dict | None): Original series component.
+        sa (dict | None): Seasonally adjusted component.
+        t (dict | None): Trend component.
+        s (dict | None): Seasonal component.
+        i (dict | None): Irregular component.
         mul (bool): True for multiplicative decomposition.
 
     Returns:

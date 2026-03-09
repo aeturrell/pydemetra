@@ -114,9 +114,10 @@ def _r2jd_ucarima(ucm: UcarimaModel) -> object:
     import jpype
 
     UcarimaModels = jpype.JClass("jdplus.toolkit.base.r.arima.UcarimaModels")
+    assert ucm.model is not None
     jmodel = _r2jd_arima(ucm.model)
     ArimaModelClass = jpype.JClass("jdplus.toolkit.base.core.arima.ArimaModel")
-    jcmps = jpype.JArray(ArimaModelClass)([_r2jd_arima(c) for c in ucm.components])
+    jcmps = jpype.JArray(ArimaModelClass)([_r2jd_arima(c) for c in ucm.components])  # type: ignore[call-non-callable]
     return UcarimaModels.of(jmodel, jcmps)
 
 
@@ -259,7 +260,7 @@ def arima_sum(*components: ArimaModel) -> ArimaModel:
 
     ArimaModels = jpype.JClass("jdplus.toolkit.base.r.arima.ArimaModels")
     ArimaModelClass = jpype.JClass("jdplus.toolkit.base.core.arima.ArimaModel")
-    jarr = jpype.JArray(ArimaModelClass)([_r2jd_arima(c) for c in components])
+    jarr = jpype.JArray(ArimaModelClass)([_r2jd_arima(c) for c in components])  # type: ignore[call-non-callable]
     jsum = ArimaModels.sum(jarr)
     return _jd2r_arima(jsum)
 
@@ -278,7 +279,7 @@ def arima_difference(left: ArimaModel, right: ArimaModel, simplify: bool = True)
     _ensure_jvm()
     jleft = _r2jd_arima(left)
     jright = _r2jd_arima(right)
-    jdiff = jleft.minus(jright, simplify)
+    jdiff = jleft.minus(jright, simplify)  # type: ignore[unresolved-attribute]
     return _jd2r_arima(jdiff)
 
 
@@ -398,7 +399,9 @@ def ucarima_estimate(x: np.ndarray, ucm: UcarimaModel, stdev: bool = True) -> np
     UcarimaModels = jpype.JClass("jdplus.toolkit.base.r.arima.UcarimaModels")
     jucm = _r2jd_ucarima(ucm)
     jcmps = UcarimaModels.estimate(np.asarray(x, dtype=np.float64), jucm, stdev)
-    return jd2r_matrix(jcmps)
+    result = jd2r_matrix(jcmps)
+    assert result is not None
+    return result
 
 
 def sarima_estimate(

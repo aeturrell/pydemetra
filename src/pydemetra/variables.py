@@ -120,6 +120,9 @@ def ao_variable(
 
     Returns:
         np.ndarray: Array with outlier regressor values.
+
+    Raises:
+        ValueError: If neither *date* nor *pos* is provided.
     """
     _ensure_jvm()
     import jpype
@@ -130,6 +133,8 @@ def ao_variable(
     if date is not None:
         data = np.array(Variables.ao(jdom, str(date)))
     else:
+        if pos is None:
+            raise ValueError("Either date or pos must be provided")
         data = np.array(Variables.ao(jdom, int(pos - 1)))
     return data
 
@@ -156,6 +161,9 @@ def ls_variable(
 
     Returns:
         np.ndarray: Array with level shift regressor values.
+
+    Raises:
+        ValueError: If neither *date* nor *pos* is provided.
     """
     _ensure_jvm()
     import jpype
@@ -166,6 +174,8 @@ def ls_variable(
     if date is not None:
         data = np.array(Variables.ls(jdom, str(date), zeroended))
     else:
+        if pos is None:
+            raise ValueError("Either date or pos must be provided")
         data = np.array(Variables.ls(jdom, int(pos - 1), zeroended))
     return data
 
@@ -192,6 +202,9 @@ def tc_variable(
 
     Returns:
         np.ndarray: Array with transitory change regressor values.
+
+    Raises:
+        ValueError: If neither *date* nor *pos* is provided.
     """
     _ensure_jvm()
     import jpype
@@ -202,6 +215,8 @@ def tc_variable(
     if date is not None:
         data = np.array(Variables.tc(jdom, str(date), float(rate)))
     else:
+        if pos is None:
+            raise ValueError("Either date or pos must be provided")
         data = np.array(Variables.tc(jdom, int(pos - 1), float(rate)))
     return data
 
@@ -228,6 +243,9 @@ def so_variable(
 
     Returns:
         np.ndarray: Array with seasonal outlier regressor values.
+
+    Raises:
+        ValueError: If neither *date* nor *pos* is provided.
     """
     _ensure_jvm()
     import jpype
@@ -238,6 +256,8 @@ def so_variable(
     if date is not None:
         data = np.array(Variables.so(jdom, str(date), zeroended))
     else:
+        if pos is None:
+            raise ValueError("Either date or pos must be provided")
         data = np.array(Variables.so(jdom, int(pos - 1), zeroended))
     return data
 
@@ -261,6 +281,9 @@ def ramp_variable(
 
     Returns:
         np.ndarray: Array with ramp regressor values.
+
+    Raises:
+        ValueError: If *range* is not provided.
     """
     _ensure_jvm()
     import jpype
@@ -269,6 +292,8 @@ def ramp_variable(
     jdom = r2jd_tsdomain(frequency, start[0], start[1], length)
     Variables = jpype.JClass("jdplus.toolkit.base.r.modelling.Variables")
 
+    if range is None:
+        raise ValueError("range must be provided")
     if isinstance(range[0], str):
         data = np.array(Variables.ramp(jdom, str(range[0]), str(range[1])))
     else:
@@ -308,6 +333,8 @@ def intervention_variable(
     import jpype
 
     frequency, start, length = _ts_params(s, frequency, start, length)
+    if starts is None or ends is None:
+        raise ValueError("starts and ends must both be provided")
     if len(starts) != len(ends):
         raise ValueError("starts and ends must have the same length")
 
@@ -330,8 +357,8 @@ def intervention_variable(
                 jdom,
                 float(delta),
                 float(seasonaldelta),
-                np.array([int(s - 1) for s in starts], dtype=np.int32),
-                np.array([int(e - 1) for e in ends], dtype=np.int32),
+                np.array([int(s) - 1 for s in starts], dtype=np.int32),
+                np.array([int(e) - 1 for e in ends], dtype=np.int32),
             )
         )
     return data
@@ -361,7 +388,9 @@ def periodic_dummies(
     jdom = r2jd_tsdomain(frequency, start[0], start[1], length)
     Variables = jpype.JClass("jdplus.toolkit.base.r.modelling.Variables")
     jm = Variables.periodicDummies(jdom)
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def periodic_contrasts(
@@ -388,7 +417,9 @@ def periodic_contrasts(
     jdom = r2jd_tsdomain(frequency, start[0], start[1], length)
     Variables = jpype.JClass("jdplus.toolkit.base.r.modelling.Variables")
     jm = Variables.periodicContrasts(jdom)
-    return jd2r_matrix(jm)
+    result = jd2r_matrix(jm)
+    assert result is not None
+    return result
 
 
 def trigonometric_variables(
@@ -397,7 +428,7 @@ def trigonometric_variables(
     length: int,
     s: pd.Series | None = None,
     seasonal_frequency: list[int] | int | None = None,
-) -> np.ndarray:
+) -> np.ndarray | None:
     """Generate trigonometric variables at seasonal frequencies.
 
     Args:
@@ -409,7 +440,7 @@ def trigonometric_variables(
             or None for all harmonics.
 
     Returns:
-        np.ndarray: Matrix with cos/sin columns.
+        np.ndarray | None: Matrix with cos/sin columns, or None.
     """
     _ensure_jvm()
     import jpype

@@ -58,7 +58,9 @@ def seasonality_qs(
     period = _get_period(data, period)
     vals = _to_1d(data)
     jtest = _seas_class().qsTest(vals, int(period), int(nyears), int(type))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def seasonality_modified_qs(
@@ -92,7 +94,9 @@ def seasonality_kruskal_wallis(
     period = _get_period(data, period)
     vals = _to_1d(data)
     jtest = _seas_class().kruskalWallisTest(vals, int(period), int(nyears))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def seasonality_periodogram(
@@ -105,7 +109,9 @@ def seasonality_periodogram(
     period = _get_period(data, period)
     vals = _to_1d(data)
     jtest = _seas_class().periodogramTest(vals, int(period), int(nyears))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def seasonality_friedman(
@@ -118,7 +124,9 @@ def seasonality_friedman(
     period = _get_period(data, period)
     vals = _to_1d(data)
     jtest = _seas_class().friedmanTest(vals, int(period), int(nyears))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def seasonality_f(
@@ -142,7 +150,9 @@ def seasonality_f(
     period = _get_period(data, period)
     vals = _to_1d(data)
     jtest = _seas_class().fTest(vals, int(period), model, int(nyears))
-    return _jd2r_test(jtest)
+    result = _jd2r_test(jtest)
+    assert result is not None
+    return result
 
 
 def seasonality_combined(
