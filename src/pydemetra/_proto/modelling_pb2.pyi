@@ -66,6 +66,7 @@ class InterventionVariable(_Message):
         start: Any
         end: Any
         def __init__(self, **kwargs: Any) -> None: ...
+
     name: str
     sequences: list[Sequence]
     delta: float
@@ -92,6 +93,7 @@ class StationaryTransformation(_Message):
     class Differencing:
         lag: int
         order: int
+
     mean_correction: bool
     differences: list[Differencing]
     stationary_series: list[float]
