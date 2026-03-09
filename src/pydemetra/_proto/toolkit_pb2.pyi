@@ -94,21 +94,27 @@ class FixedDay(_Message):
     day: int
     weight: float
     validity: ValidityPeriod
-    def __init__(self, *, month: int = ..., day: int = ..., weight: float = ..., **kwargs: Any) -> None: ...
+    def __init__(
+        self, *, month: int = ..., day: int = ..., weight: float = ..., **kwargs: Any
+    ) -> None: ...
 
 class EasterRelatedDay(_Message):
     offset: int
     julian: bool
     weight: float
     validity: ValidityPeriod
-    def __init__(self, *, offset: int = ..., julian: bool = ..., weight: float = ..., **kwargs: Any) -> None: ...
+    def __init__(
+        self, *, offset: int = ..., julian: bool = ..., weight: float = ..., **kwargs: Any
+    ) -> None: ...
 
 class PrespecifiedHoliday(_Message):
     event: int
     offset: int
     weight: float
     validity: ValidityPeriod
-    def __init__(self, *, event: int = ..., offset: int = ..., weight: float = ..., **kwargs: Any) -> None: ...
+    def __init__(
+        self, *, event: int = ..., offset: int = ..., weight: float = ..., **kwargs: Any
+    ) -> None: ...
 
 class FixedWeekDay(_Message):
     month: int
@@ -116,7 +122,15 @@ class FixedWeekDay(_Message):
     weekday: int
     weight: float
     validity: ValidityPeriod
-    def __init__(self, *, month: int = ..., position: int = ..., weekday: int = ..., weight: float = ..., **kwargs: Any) -> None: ...
+    def __init__(
+        self,
+        *,
+        month: int = ...,
+        position: int = ...,
+        weekday: int = ...,
+        weight: float = ...,
+        **kwargs: Any,
+    ) -> None: ...
 
 class SingleDate(_Message):
     date: Date

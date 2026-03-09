@@ -24,6 +24,7 @@ class RegArimaModel(_Message):
         preadjustment: int
         variables: list[Any]
         arima: Any
+
     class Estimation(_Message):
         y: list[float]
         x: Any
@@ -33,6 +34,7 @@ class RegArimaModel(_Message):
         likelihood: Any
         residuals: list[float]
         missings: list[Any]
+
     description: Description
     estimation: Estimation
     diagnostics: Any
