@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This project intends to be an easy-to-use Python binding / front-end for JDemetra, initially ported from the R code (found in `rpackage/`). jdemetra executable is found in `jdemetra/bin`.
+This project intends to be an easy-to-use Python binding / front-end for JDemetra, initially ported from the R code (found in `rpackages/`).
 
 ## Common Development Tasks
 
@@ -18,9 +18,24 @@ uv sync --group dev
 uv pip install -e .
 ```
 
+### Installing new packages
+
+```bash
+uv add <packagename>
+```
+
 ### Code Quality
+
 ```bash
 uv run pre-commit run --all-files
+```
+
+```bash
+uv run nox
+```
+
+```bash
+uv run pytest tests/
 ```
 
 ## Key Configuration

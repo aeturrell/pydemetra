@@ -29,6 +29,7 @@ dev = [
     "ruff>=0.15.4",
     "ty>=0.0.20",
     "xdoctest>=1.1",
+    "grpcio-tools>=1.78.0",
 ]
 
 [build-system]

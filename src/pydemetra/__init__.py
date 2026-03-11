@@ -113,6 +113,16 @@ from pydemetra.timeseries import (
     ts_interpolate,
     tsdata_of,
 )
+from pydemetra.tramoseats import (
+    set_seats,
+    tramo,
+    tramo_fast,
+    tramo_spec,
+    tramoseats,
+    tramoseats_dictionary,
+    tramoseats_fast,
+    tramoseats_spec,
+)
 from pydemetra.variables import (
     ao_variable,
     easter_variable,
@@ -231,6 +241,7 @@ __all__ = [
     "seasonality_periodogram",
     "seasonality_qs",
     "set_benchmarking",
+    "set_seats",
     "single_day",
     "skewness",
     "so_variable",
@@ -242,6 +253,13 @@ __all__ = [
     "td_f",
     "td_time_varying",
     "test_of_runs",
+    "tramo",
+    "tramo_fast",
+    "tramo_spec",
+    "tramoseats",
+    "tramoseats_dictionary",
+    "tramoseats_fast",
+    "tramoseats_spec",
     "test_of_up_down_runs",
     "trigonometric_variables",
     "ts_adjust",

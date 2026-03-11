@@ -95,6 +95,17 @@ quartodoc:
         - x13_regarima_spec
         - x13_spec
         - set_x11
+    - title: "TRAMO-SEATS"
+      desc: "Run TRAMO-SEATS seasonal adjustment and retrieve specifications"
+      contents:
+        - tramoseats
+        - tramoseats_fast
+        - tramoseats_spec
+        - tramoseats_dictionary
+        - tramo
+        - tramo_fast
+        - tramo_spec
+        - set_seats
     - title: "RegARIMA results"
       desc: "Inspect estimation results from RegARIMA models"
       contents:
