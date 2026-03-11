@@ -21,8 +21,8 @@ jobs:
           - { python-version: "3.13", os: ubuntu-latest, session: "tests" }
           - { python-version: "3.11", os: windows-latest, session: "tests" }
           - { python-version: "3.11", os: macos-latest, session: "tests" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "typeguard" }
-          - { python-version: "3.10", os: ubuntu-latest, session: "xdoctest" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "typeguard" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "xdoctest" }
 
     env:
       NOXSESSION: ${{ matrix.session }}
