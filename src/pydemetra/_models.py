@@ -3,6 +3,8 @@ from __future__ import annotations
 import datetime
 from dataclasses import dataclass, field
 
+import pandas as pd
+
 
 @dataclass
 class StatisticalTest:
@@ -182,8 +184,8 @@ class SaDecomposition:
     """Seasonal adjustment decomposition result."""
 
     mode: str = ""
-    series: dict | None = None
-    sa: dict | None = None
-    t: dict | None = None
-    s: dict | None = None
-    i: dict | None = None
+    series: pd.Series | None = None
+    sa: pd.Series | None = None
+    t: pd.Series | None = None
+    s: pd.Series | None = None
+    i: pd.Series | None = None

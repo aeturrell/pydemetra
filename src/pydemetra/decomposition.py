@@ -1,24 +1,26 @@
 from __future__ import annotations
 
+import pandas as pd
+
 from pydemetra._models import SaDecomposition
 
 
 def sa_decomposition(
-    y: dict | None = None,
-    sa: dict | None = None,
-    t: dict | None = None,
-    s: dict | None = None,
-    i: dict | None = None,
+    y: pd.Series | None = None,
+    sa: pd.Series | None = None,
+    t: pd.Series | None = None,
+    s: pd.Series | None = None,
+    i: pd.Series | None = None,
     mul: bool = True,
 ) -> SaDecomposition:
     """Create a seasonal adjustment decomposition result.
 
     Args:
-        y (dict | None): Original series component.
-        sa (dict | None): Seasonally adjusted component.
-        t (dict | None): Trend component.
-        s (dict | None): Seasonal component.
-        i (dict | None): Irregular component.
+        y (pd.Series | None): Original series component.
+        sa (pd.Series | None): Seasonally adjusted component.
+        t (pd.Series | None): Trend component.
+        s (pd.Series | None): Seasonal component.
+        i (pd.Series | None): Irregular component.
         mul (bool): True for multiplicative decomposition.
 
     Returns:

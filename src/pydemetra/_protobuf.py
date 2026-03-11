@@ -14,6 +14,8 @@ def enum_extract(enum_type: EnumTypeWrapper, value: int) -> str:
         str: The portion of the name after the first underscore.
     """
     name = enum_type.Name(value)
+    if "_" not in name:
+        return name
     idx = name.index("_")
     return name[idx + 1 :]
 
