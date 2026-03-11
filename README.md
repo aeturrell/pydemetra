@@ -1,8 +1,13 @@
 # pydemetra
 
-![package logo](icon.svg)
+![](docs/icon.svg)
+
+![](icon.svg)
+
 
 Python front-end to [JDemetra+](https://github.com/jdemetra), which is a [Java](https://www.java.com/en/) package for **seasonal adjustment**.
+
+⚠️ This repo is under development and not fully tested. Use with caution ⚠️
 
 Want to just get going? Head to the [Quick Start](quick_start.ipynb) page.
 
@@ -10,11 +15,12 @@ This project has no affiliation the original JDemetra+, but we're grateful to it
 
 ## Functionality
 
-pydemetra was inspired by the [rjdverse](https://github.com/rjdverse) R front-end to JDemetra+. Not all of that functionality is implemented yet.
+pydemetra was inspired by the [rjdverse](https://github.com/rjdverse) R front-end to JDemetra+. Without that package, this one would not be possible. Not all of the functionality of either JDemetra+ or the R front-end is implemented in this package.
 
 ### Implemented
 
 - **X-13ARIMA-SEATS** seasonal adjustment (X-13, X-11, RegARIMA)
+- **TRAMO-SEATS** seasonal adjustment (TRAMO, SEATS)
 - **Calendars and trading days** — national calendars, fixed/Easter/weekday holidays, trading day regressors
 - **ARIMA modelling** — SARIMA, UCARIMA, estimation, decomposition, simulation
 - **Regression variables** — outliers (AO, LS, TC, SO), ramps, interventions, Easter/leap-year effects, periodic dummies, trigonometric variables
@@ -27,7 +33,6 @@ pydemetra was inspired by the [rjdverse](https://github.com/rjdverse) R front-en
 ### Not implemented
 
 
-- **TRAMO-SEATS** seasonal adjustment
 - **STL** decomposition
 - **State space** models
 - **High-frequency** seasonal adjustment

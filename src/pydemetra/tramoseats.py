@@ -7,29 +7,42 @@ import pandas as pd
 
 from pydemetra._converters import (
     p2r_arima,
-    p2r_ivs as _p2r_ivs,
-    p2r_outliers as _p2r_outliers,
     p2r_parameter,
     p2r_parameters,
-    p2r_ramps as _p2r_ramps,
     p2r_regarima_rslts,
     p2r_sa_decomposition,
     p2r_sa_diagnostics,
     p2r_span,
     p2r_spec_benchmarking,
     p2r_spec_sarima,
-    p2r_tsdata,
     p2r_ucarima,
     p2r_uservars,
     r2jd_tsdata,
-    r2p_ivs as _r2p_ivs,
-    r2p_outliers as _r2p_outliers,
     r2p_parameter,
     r2p_parameters,
-    r2p_ramps as _r2p_ramps,
     r2p_span,
     r2p_spec_benchmarking,
     r2p_spec_sarima,
+)
+from pydemetra._converters import (
+    p2r_ivs as _p2r_ivs,
+)
+from pydemetra._converters import (
+    p2r_outliers as _p2r_outliers,
+)
+from pydemetra._converters import (
+    p2r_ramps as _p2r_ramps,
+)
+from pydemetra._converters import (
+    r2p_ivs as _r2p_ivs,
+)
+from pydemetra._converters import (
+    r2p_outliers as _r2p_outliers,
+)
+from pydemetra._converters import (
+    r2p_ramps as _r2p_ramps,
+)
+from pydemetra._converters import (
     r2p_uservars as _r2p_uservars,
 )
 from pydemetra._java import _ensure_jvm
@@ -217,9 +230,7 @@ def _set_seats_inner(
     if algorithm is not None:
         algo_upper = algorithm.upper()
         if algo_upper not in _ALGORITHMS:
-            raise ValueError(
-                f"Invalid algorithm: {algorithm!r}. Choose from {tuple(_ALGORITHMS)}"
-            )
+            raise ValueError(f"Invalid algorithm: {algorithm!r}. Choose from {tuple(_ALGORITHMS)}")
         x["algorithm"] = _ALGORITHMS[algo_upper]
 
     if bias is not None:
@@ -566,9 +577,7 @@ def _r2p_spec_tramo(r: dict):
     p.basic.span.CopyFrom(r2p_span(r["basic"]["span"]))
     p.basic.preliminary_check = r["basic"]["preliminaryCheck"]
 
-    p.transform.transformation = enum_of(
-        modelling_pb2.Transformation, r["transform"]["fn"], "FN"
-    )
+    p.transform.transformation = enum_of(modelling_pb2.Transformation, r["transform"]["fn"], "FN")
     p.transform.fct = r["transform"]["fct"]
     p.transform.adjust = enum_of(modelling_pb2.LengthOfPeriod, r["transform"]["adjust"], "LP")
     p.transform.outliers_correction = r["transform"]["outliers"]
@@ -607,9 +616,7 @@ def _r2p_spec_tramo(r: dict):
         p.regression.ramps.append(ramp)
 
     p.regression.td.td = enum_sof(modelling_pb2.TradingDays, r["regression"]["td"]["td"])
-    p.regression.td.lp = enum_of(
-        modelling_pb2.LengthOfPeriod, r["regression"]["td"]["lp"], "LP"
-    )
+    p.regression.td.lp = enum_of(modelling_pb2.LengthOfPeriod, r["regression"]["td"]["lp"], "LP")
     p.regression.td.holidays = r["regression"]["td"]["holidays"]
     for u in r["regression"]["td"]["users"]:
         p.regression.td.users.append(u)
@@ -618,9 +625,7 @@ def _r2p_spec_tramo(r: dict):
         tramoseats_pb2.TradingDaysTest, r["regression"]["td"]["test"], "TD"
     )
     td_r = r["regression"]["td"]
-    p.regression.td.auto = enum_of(
-        tramoseats_pb2.AutomaticTradingDays, td_r["auto"], "TD"
-    )
+    p.regression.td.auto = enum_of(tramoseats_pb2.AutomaticTradingDays, td_r["auto"], "TD")
     p.regression.td.auto_adjust = td_r["autoadjust"]
     p.regression.td.ptest = td_r["ptest"]
     for c in r2p_parameters(td_r["tdcoefficients"]):
@@ -628,9 +633,7 @@ def _r2p_spec_tramo(r: dict):
     p.regression.td.lpcoefficient.CopyFrom(r2p_parameter(td_r["lpcoefficient"]))
 
     easter_r = r["regression"]["easter"]
-    p.regression.easter.type = enum_of(
-        tramoseats_pb2.EasterType, easter_r["type"], "EASTER"
-    )
+    p.regression.easter.type = enum_of(tramoseats_pb2.EasterType, easter_r["type"], "EASTER")
     p.regression.easter.duration = easter_r["duration"]
     p.regression.easter.julian = easter_r["julian"]
     p.regression.easter.test = easter_r["test"]
@@ -662,9 +665,7 @@ def _p2r_spec_seats(spec) -> dict:
 def _r2p_spec_seats(spec: dict):
     p = tramoseats_pb2.DecompositionSpec()
     p.xl_boundary = spec["xl"]
-    p.approximation = enum_of(
-        tramoseats_pb2.SeatsApproximation, spec["approximation"], "SEATS"
-    )
+    p.approximation = enum_of(tramoseats_pb2.SeatsApproximation, spec["approximation"], "SEATS")
     p.seastolerance = spec["epsphi"]
     p.trend_boundary = spec["rmod"]
     p.seas_boundary = spec["sbound"]
