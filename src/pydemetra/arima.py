@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from typing import Any
+
 import numpy as np
 
 from pydemetra._converters import (
@@ -459,7 +461,7 @@ def sarima_estimate(
 
     from pydemetra._converters import p2r_likelihood, p2r_matrix
 
-    result = {
+    result: dict[str, Any] = {
         "y": np.array(list(msg.y)),
         "b": np.array(list(msg.b)),
         "residuals": np.array(list(msg.residuals)),
