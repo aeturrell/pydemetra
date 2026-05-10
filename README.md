@@ -7,6 +7,22 @@
 
 Python front-end to [JDemetra+](https://github.com/jdemetra), which is a [Java](https://www.java.com/en/) package for **seasonal adjustment**.
 
+[![PyPI](https://img.shields.io/pypi/v/pydemetra.svg)](https://pypi.org/project/pydemetra/)
+[![Status](https://img.shields.io/pypi/status/pydemetra.svg)](https://pypi.org/project/pydemetra/)
+[![Python Version](https://img.shields.io/pypi/pyversions/pydemetra)](https://pypi.org/project/pydemetra)
+[![License](https://img.shields.io/pypi/l/pydemetra)](https://opensource.org/licenses/MIT)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![Tests](https://github.com/aeturrell/pydemetra/workflows/Tests/badge.svg)](https://github.com/aeturrell/pydemetra/actions?workflow=Tests)
+[![Codecov](https://codecov.io/gh/aeturrell/pydemetra/branch/main/graph/badge.svg)](https://codecov.io/gh/aeturrell/pydemetra)
+[![Read the documentation at https://aeturrell.github.io/pydemetra/](https://img.shields.io/badge/Go%20to%20the%20docs-purple?style=flat)](https://aeturrell.github.io/pydemetra/)
+[![Downloads](https://static.pepy.tech/badge/pydemetra)](https://pepy.tech/projects/pydemetra)
+
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![macOS](https://img.shields.io/badge/mac%20os-000000?style=for-the-badge&logo=macos&logoColor=F0F0F0)
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+[![Source](https://img.shields.io/badge/source%20code-github-lightgrey?style=for-the-badge)](https://github.com/aeturrell/pydemetra)
+
 ⚠️ This repo is under development and not fully tested. Use with caution ⚠️
 
 Want to just get going? Head to the [Quick Start](quick_start.ipynb) page.
