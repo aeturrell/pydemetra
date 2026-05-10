@@ -1,45 +1,49 @@
 name: Release
 
-permissions:
-  contents: write
-  pages: write
-
 on:
   push:
     branches:
       - main
       - master
 
+permissions:
+  contents: write
+  pages: write
+  id-token: write # Required for Trusted Publishing
+
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    # This environment name MUST match what you configured on PyPI
+    environment:
+      name: release
+    
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v4 # Updated to v4 (stable)
         with:
           fetch-depth: 2
 
       - name: Set up Python
-        uses: actions/setup-python@v6.2.0
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v7
+        uses: astral-sh/setup-uv@v5
         with:
-          # Install a specific version of uv.
           version: "0.10.9"
 
       - name: Check if there is a parent commit
         id: check-parent-commit
         run: |
-          echo "::set-output name=sha::$(git rev-parse --verify --quiet HEAD^)"
+          echo "sha=$(git rev-parse --verify --quiet HEAD^)" >> $GITHUB_OUTPUT
 
       - name: Detect and tag new version
         id: check-version
         if: steps.check-parent-commit.outputs.sha
-        uses: salsify/action-detect-and-tag-new-version@v2.0.3
+        uses: salsify/action-detect-and-tag-new-version@v2
         with:
           version-command: |
             uvx --from=toml-cli toml get --toml-path=pyproject.toml project.version
@@ -58,20 +62,10 @@ jobs:
       - name: Publish package on PyPI
         if: steps.check-version.outputs.tag
         uses: pypa/gh-action-pypi-publish@v1.13.0
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
-
-      - name: Publish package on TestPyPI
-        if: "! steps.check-version.outputs.tag"
-        uses: pypa/gh-action-pypi-publish@v1.13.0
-        with:
-          user: __token__
-          password: ${{ secrets.TEST_PYPI_TOKEN }}
-          repository-url: https://test.pypi.org/legacy/
+        # No user/password needed here for Trusted Publishing!
 
       - name: Publish the release notes
-        uses: release-drafter/release-drafter@v6.4.0
+        uses: release-drafter/release-drafter@v6
         with:
           publish: ${{ steps.check-version.outputs.tag != '' }}
           tag: ${{ steps.check-version.outputs.tag }}
@@ -92,13 +86,13 @@ jobs:
         run: uv run quartodoc build --config docs/_quarto.yml
 
       - name: Build docs
-        run: cd docs;uv run quarto render --execute
+        run: cd docs; uv run quarto render --execute
 
       - name: git config
         run: |
           git config user.name "$(git log -n 1 --pretty=format:%an)" &&
           git config user.email "$(git log -n 1 --pretty=format:%ae)"
 
-      - name: Publish
+      - name: Publish Docs
         if: steps.check-version.outputs.tag
-        run: cd docs;uv run quarto publish gh-pages --no-render --no-browser
+        run: cd docs; uv run quarto publish gh-pages --no-render --no-browser
