@@ -18,7 +18,7 @@ jobs:
     # This environment name MUST match what you configured on PyPI
     environment:
       name: release
-    
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4 # Updated to v4 (stable)
