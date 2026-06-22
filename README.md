@@ -23,9 +23,9 @@ Python front-end to [JDemetra+](https://github.com/jdemetra), which is a [Java](
 ![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 [![Source](https://img.shields.io/badge/source%20code-github-lightgrey?style=for-the-badge)](https://github.com/aeturrell/pydemetra)
 
-⚠️ This repo is under development and not fully tested. Use with caution ⚠️
+⚠️ This repo was largely vibe-coded. Use with caution ⚠️
 
-Want to just get going? Head to the [Quick Start](quick_start.ipynb) page.
+Want to just get going? Head to the [quick start page on the docs](https://aeturrell.github.io/pydemetra/quick_start.html) page.
 
 This project has no affiliation the original JDemetra+, but we're grateful to its creators!
 

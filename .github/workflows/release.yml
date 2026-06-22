@@ -64,6 +64,12 @@ jobs:
         uses: pypa/gh-action-pypi-publish@v1.13.0
         # No user/password needed here for Trusted Publishing!
 
+      - name: Publish package on TestPyPI
+        if: "! steps.check-version.outputs.tag"
+        uses: pypa/gh-action-pypi-publish@v1.14.0
+        with:
+          repository-url: https://test.pypi.org/legacy/
+
       - name: Publish the release notes
         uses: release-drafter/release-drafter@v6
         with:
